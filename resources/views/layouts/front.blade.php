@@ -42,7 +42,7 @@
                     <div class="w-12 h-12 bg-purple-600 rounded-full"></div>
 
                     <h1 class="font-bold text-xl">
-                        JOKI PRO
+                        JOKI CSstore
                     </h1>
 
                 </div>
@@ -160,7 +160,7 @@
 
             <p class="text-center text-gray-400">
 
-                © 2026 Joki Pro.
+                © 2026 Joki CSstore.
 
             </p>
 

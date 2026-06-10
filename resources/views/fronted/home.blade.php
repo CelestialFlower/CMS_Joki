@@ -143,29 +143,34 @@ gap-5">
 
             </div>
 
-            <div class="card-bg rounded-2xl p-3">
+            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
                 <img src="https://placehold.co/300" class="rounded-xl">
                 <h3 class="mt-3">Honkai Star Rail</h3>
+                <p class="text-sm text-gray-300">Mulai Rp5.000</p>
             </div>
 
-            <div class="card-bg rounded-2xl p-3">
+            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
                 <img src="https://placehold.co/300" class="rounded-xl">
                 <h3 class="mt-3">Genshin Impact</h3>
+                <p class="text-sm text-gray-300">Mulai Rp5.000</p>
             </div>
 
-            <div class="card-bg rounded-2xl p-3">
+            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
                 <img src="https://placehold.co/300" class="rounded-xl">
                 <h3 class="mt-3">Wuthering Waves</h3>
+                <p class="text-sm text-gray-300">Mulai Rp5.000</p>
             </div>
 
-            <div class="card-bg rounded-2xl p-3">
+            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
                 <img src="https://placehold.co/300" class="rounded-xl">
                 <h3 class="mt-3">Zenless Zone Zero</h3>
+                <p class="text-sm text-gray-300">Mulai Rp5.000</p>
             </div>
 
-            <div class="card-bg rounded-2xl p-3">
+            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
                 <img src="https://placehold.co/300" class="rounded-xl">
                 <h3 class="mt-3">Blue Archive</h3>
+                <p class="text-sm text-gray-300">Mulai Rp5.000</p> 
             </div>
 
         </div>
