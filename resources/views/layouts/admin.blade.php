@@ -1,59 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>User Dashboard</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="bg-gray-100">
 
-<div class="flex min-h-screen">
+<!-- main NAVBAR -->
+ <nav class="bg-[#0f0c29] border-b border-purple-800">
 
-    <!-- SIDEBAR -->
+        <div class="container mx-auto px-6">
 
-    <aside class="w-64 bg-purple-900 text-white p-6">
+            <div class="flex justify-between items-center h-20">
 
-        <h1 class="text-2xl font-bold mb-10">
-            ADMIN PANEL
-        </h1>
+                <div class="flex items-center gap-3">
 
-        <nav class="space-y-4">
+                    <div class="w-12 h-12 bg-purple-600 rounded-full"></div>
 
-            <a href="/admin/dashboard" class="block hover:text-yellow-400">
+                    <h1 class="font-bold text-xl">
+                        JOKI CSstore
+                    </h1>
+
+                </div>
+
+                <div class="hidden md:flex gap-8">
+
+                    <a href="{{ route('fronted.home') }}">Beranda</a>
+                    <a href="{{ route('fronted.game') }}">Game</a>
+                    <a href="{{ route('fronted.artikel') }}">Artikel</a>
+                    <a href="{{ route('fronted.tentang') }}">Tentang</a>
+                    <a href="{{ route('fronted.kontak') }}">Kontak</a>
+
+                </div>
+
+               <div class="flex items-center gap-4">
+
+    @guest
+
+        <a href="{{ route('login') }}"
+           class="px-4 py-2 border border-purple-500 rounded-lg">
+            Login
+        </a>
+
+        <a href="{{ route('register') }}"
+           class="px-4 py-2 bg-purple-600 rounded-lg">
+            Daftar
+        </a>
+
+    @endguest
+
+    @auth
+
+        <div class="text-right">
+
+            <div class="font-semibold">
+                {{ Auth::user()->name }}
+            </div>
+
+            <div class="text-xs text-purple-300">
+                {{ strtoupper(Auth::user()->role) }}
+            </div>
+
+        </div>
+
+        @if(Auth::user()->role == 'admin')
+
+            <a href="{{ route('admin.dashboard') }}"
+               class="px-4 py-2 bg-green-600 rounded-lg">
+                Dashboard Admin
+            </a>
+
+        @else
+
+            <a href="{{ route('user.dashboard') }}"
+               class="px-4 py-2 bg-blue-600 rounded-lg">
                 Dashboard
             </a>
 
-            <a href="/admin/customer" class="block hover:text-yellow-400">
-                Kelola Pelanggan
-            </a>
+        @endif
 
-            <a href="/admin/penjoki" class="block hover:text-yellow-400">
-                Kelola Penjoki
-            </a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
 
-            <a href="/admin/order" class="block hover:text-yellow-400">
-                Kelola Order
-            </a>
+            <button type="submit"
+                    class="px-4 py-2 bg-red-600 rounded-lg">
+                Logout
+            </button>
+        </form>
 
-            <a href="/admin/payment" class="block hover:text-yellow-400">
-                Kelola Pembayaran
-            </a>
-
-        </nav>
-
-    </aside>
-
-    <!-- CONTENT -->
-
-    <main class="flex-1 p-10">
-
-        @yield('content')
-
-    </main>
+    @endauth
 
 </div>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- NAVBAR -->
+
+
+
+    <div class="flex">
+
+        <!-- SIDEBAR -->
+
+        <aside class="w-64 min-h-screen bg-indigo-900 text-white p-6">
+
+    <div class="mb-8">
+
+        <h2 class="text-xl font-bold">
+            USER PANEL
+        </h2>
+
+        @auth
+
+            <div class="mt-3 p-3 bg-indigo-800 rounded-lg">
+
+                <div class="font-semibold">
+                    {{ Auth::user()->name }}
+                </div>
+                <div class="font-semibold">
+                    {{ Auth::user()->role }}
+                </div>
+                </div>
+
+        @endauth
+
+    </div>
+
+    <nav class="space-y-3">
+
+        <a href="{{ route('admin.dashboard') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            🏠 Dashboard
+        </a>
+
+        <a href="{{ route('admin.penjoki') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            🎮 Kelola Penjoki
+        </a>
+
+    </nav>
+
+</aside>
+
+        <!-- CONTENT -->
+
+        <main class="flex-1 p-8">
+
+            @yield('content')
+
+        </main>
+
+    </div>
 
 </body>
 </html>

@@ -1,6 +1,5 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
-@section('title','Kelola Penjoki')
 
 @section('content')
 

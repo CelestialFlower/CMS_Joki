@@ -8,39 +8,100 @@
 </head>
 <body class="bg-gray-100">
 
-    <!-- NAVBAR -->
+<!-- main NAVBAR -->
+ <nav class="bg-[#0f0c29] border-b border-purple-800">
 
-    <header class="bg-white shadow">
+        <div class="container mx-auto px-6">
 
-        <div class="max-w-full px-8 py-4 flex justify-between items-center">
+            <div class="flex justify-between items-center h-20">
 
-            <h1 class="text-2xl font-bold">
-                CMS JOKI
-            </h1>
+                <div class="flex items-center gap-3">
 
-            <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-purple-600 rounded-full"></div>
 
-                <span>
-                    {{ Auth::user()->name }}
-                </span>
+                    <h1 class="font-bold text-xl">
+                        JOKI CSstore
+                    </h1>
 
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+                </div>
 
-                    <button
-                        type="submit"
-                        class="bg-red-500 text-white px-4 py-2 rounded-lg">
+                <div class="hidden md:flex gap-8">
 
-                        Logout
+                    <a href="{{ route('fronted.home') }}">Beranda</a>
+                    <a href="{{ route('fronted.game') }}">Game</a>
+                    <a href="{{ route('fronted.artikel') }}">Artikel</a>
+                    <a href="{{ route('fronted.tentang') }}">Tentang</a>
+                    <a href="{{ route('fronted.kontak') }}">Kontak</a>
 
-                    </button>
-                </form>
+                </div>
 
+               <div class="flex items-center gap-4">
+
+    @guest
+
+        <a href="{{ route('login') }}"
+           class="px-4 py-2 border border-purple-500 rounded-lg">
+            Login
+        </a>
+
+        <a href="{{ route('register') }}"
+           class="px-4 py-2 bg-purple-600 rounded-lg">
+            Daftar
+        </a>
+
+    @endguest
+
+    @auth
+
+        <div class="text-right">
+
+            <div class="font-semibold">
+                {{ Auth::user()->name }}
+            </div>
+
+            <div class="text-xs text-purple-300">
+                {{ strtoupper(Auth::user()->role) }}
             </div>
 
         </div>
 
-    </header>
+        @if(Auth::user()->role == 'admin')
+
+            <a href="{{ route('admin.dashboard') }}"
+               class="px-4 py-2 bg-green-600 rounded-lg">
+                Dashboard Admin
+            </a>
+
+        @else
+
+            <a href="{{ route('user.dashboard') }}"
+               class="px-4 py-2 bg-blue-600 rounded-lg">
+                Dashboard
+            </a>
+
+        @endif
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <button type="submit"
+                    class="px-4 py-2 bg-red-600 rounded-lg">
+                Logout
+            </button>
+        </form>
+
+    @endauth
+
+</div>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- NAVBAR -->
+
+
 
     <div class="flex">
 
@@ -48,43 +109,53 @@
 
         <aside class="w-64 min-h-screen bg-indigo-900 text-white p-6">
 
-            <h2 class="text-xl font-bold mb-8">
-                USER PANEL
-            </h2>
+    <div class="mb-8">
 
-            <nav class="space-y-4">
+        <h2 class="text-xl font-bold">
+            USER PANEL
+        </h2>
 
-                <a href="{{ route('user/dashboard') }}"
-                   class="block hover:text-yellow-400">
+        @auth
 
-                    Dashboard
+            <div class="mt-3 p-3 bg-indigo-800 rounded-lg">
 
-                </a>
+                <div class="font-semibold">
+                    {{ Auth::user()->name }}
+                </div>
+                <div class="font-semibold">
+                    {{ Auth::user()->role }}
+                </div>
+                </div>
 
-                <a href="/user/order"
-                   class="block hover:text-yellow-400">
+        @endauth
 
-                    Buat Order
+    </div>
 
-                </a>
+    <nav class="space-y-3">
 
-                <a href="/user/riwayat"
-                   class="block hover:text-yellow-400">
+        <a href="{{ route('user.dashboard') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            🏠 Dashboard
+        </a>
 
-                    Riwayat Order
+        <a href="{{ route('user.order') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            🎮 Buat Order
+        </a>
 
-                </a>
+        <a href="{{ route('user.riwayat') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            📜 Riwayat Order
+        </a>
 
-                <a href="/user/status-order"
-                   class="block hover:text-yellow-400">
+        <a href="{{ route('user.status') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            📦 Status Order
+        </a>
 
-                    Status Order
+    </nav>
 
-                </a>
-
-            </nav>
-
-        </aside>
+</aside>
 
         <!-- CONTENT -->
 

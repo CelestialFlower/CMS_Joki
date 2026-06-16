@@ -28,20 +28,48 @@ class FrontController extends Controller
     {
         return view('fronted.artikel');
     }
-   public function tentang()
+    
+    public function tentang()
     {
         return view('fronted.tentang');
     }
+    
     public function kontak()
     {
         return view('fronted.kontak');
     }
     
+    public function status()
+    {
+        return view('user.status');
+    }
+    
+    public function rolestatus()
+    {
+    dd(auth()->user()->role);
+
+    return view('user.status');
+    }
+    public function penjoki()
+    {
+        return view('admin.penjoki');
+    }
+    public function costumer()
+    {
+        return view('admin.costumer');
+    }
     public function store(Request $request)
     {
         //
     }
-
+    public function order()
+    {
+        return view('user.order');
+    }
+    public function riwayat()
+    {
+        return view('user.riwayat');
+    }
     /**
      * Display the specified resource.
      */
@@ -73,4 +101,5 @@ class FrontController extends Controller
     {
         //
     }
+    
 }

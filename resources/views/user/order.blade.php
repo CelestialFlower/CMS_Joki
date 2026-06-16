@@ -2,38 +2,61 @@
 
 @section('content')
 
-<h1 class="text-3xl font-bold mb-6">
-    Buat Order Joki
-</h1>
+<div class="bg-[#16122D] p-8 rounded-3xl">
 
-<div class="bg-white p-6 rounded-2xl shadow">
+    <h2 class="text-3xl font-bold mb-8">
+        Buat Order Joki
+    </h2>
 
     <form>
 
-        <div class="mb-4">
+        <div class="grid md:grid-cols-2 gap-5">
 
-            <label>Game</label>
+            <div>
+                <label>Game</label>
 
-            <input
-                type="text"
-                class="w-full border rounded-lg p-3 mt-2">
+                <select class="w-full p-4 mt-2 rounded-xl bg-[#0F0C24]">
+
+                    <option>Zenless Zone Zero</option>
+                    <option>Wuthering Waves</option>
+                    <option>Honkai Star Rail</option>
+
+                </select>
+            </div>
+
+            <div>
+                <label>Layanan</label>
+
+                <select class="w-full p-4 mt-2 rounded-xl bg-[#0F0C24]">
+
+                    <option>Story Quest</option>
+                    <option>Daily Farming</option>
+                    <option>Leveling</option>
+
+                </select>
+            </div>
 
         </div>
 
-        <div class="mb-4">
+        <div class="mt-5">
 
-            <label>Detail Order</label>
+            <label>UID / ID Game</label>
 
-            <textarea
-                class="w-full border rounded-lg p-3 mt-2">
-            </textarea>
+            <input type="text" class="w-full mt-2 p-4 rounded-xl bg-[#0F0C24]">
 
         </div>
 
-        <button
-            class="bg-indigo-600 text-white px-6 py-3 rounded-lg">
+        <div class="mt-5">
 
-            Kirim Order
+            <label>Catatan</label>
+
+            <textarea rows="4" class="w-full mt-2 p-4 rounded-xl bg-[#0F0C24]"></textarea>
+
+        </div>
+
+        <button class="mt-6 bg-purple-600 px-8 py-3 rounded-xl">
+
+            Buat Order
 
         </button>
 

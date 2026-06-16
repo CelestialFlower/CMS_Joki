@@ -57,17 +57,47 @@
 
                 </div>
 
-                <div class="flex gap-3">
+               <div class="flex gap-3">
 
-                    <button class="px-4 py-2 border border-purple-500 rounded-lg">
-                        Login
-                    </button>
+    @guest
 
-                    <button class="px-4 py-2 bg-purple-600 rounded-lg">
-                        Daftar
-                    </button>
+<a href="{{ route('login') }}">
+    Login
+</a>
 
-                </div>
+<a href="{{ route('register') }}">
+    Daftar
+</a>
+
+@endguest
+
+
+@auth
+
+@if(Auth::user()->role == 'admin')
+
+<a href="{{ route('admin.dashboard') }}">
+    Dashboard Admin
+</a>
+
+@else
+
+<a href="{{ route('user.dashboard') }}">
+    Dashboard
+</a>
+
+@endif
+
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit">
+        Logout
+    </button>
+</form>
+
+@endauth
+
+</div>
 
             </div>
 
