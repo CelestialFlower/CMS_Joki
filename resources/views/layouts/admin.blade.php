@@ -6,7 +6,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-[#0b0b1f] text-white">
 
 <!-- main NAVBAR -->
  <nav class="bg-[#0f0c29] border-b border-purple-800">
@@ -53,17 +53,6 @@
 
     @auth
 
-        <div class="text-right">
-
-            <div class="font-semibold">
-                {{ Auth::user()->name }}
-            </div>
-
-            <div class="text-xs text-purple-300">
-                {{ strtoupper(Auth::user()->role) }}
-            </div>
-
-        </div>
 
         @if(Auth::user()->role == 'admin')
 
@@ -107,12 +96,12 @@
 
         <!-- SIDEBAR -->
 
-        <aside class="w-64 min-h-screen bg-indigo-900 text-white p-6">
+   <aside class="w-64 min-h-screen bg-[#17132f] text-white p-6 border-r border-purple-800">
 
     <div class="mb-8">
 
         <h2 class="text-xl font-bold">
-            USER PANEL
+           Admin PANEL
         </h2>
 
         @auth
@@ -125,7 +114,7 @@
                 <div class="font-semibold">
                     {{ Auth::user()->role }}
                 </div>
-                </div>
+            </div>
 
         @endauth
 
@@ -140,7 +129,25 @@
 
         <a href="{{ route('admin.penjoki') }}"
            class="block p-3 rounded-lg hover:bg-indigo-700">
-            🎮 Kelola Penjoki
+            🎮 kelola Penjoki
+        </a>
+
+        <a href="{{ route('admin.costumer') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            🧑‍💼 kelola Pelanggan
+        </a>
+
+        <a href="{{ route('admin.editartikel') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            📝 kelola Artikel  
+        </a>
+        <a href="{{ route('admin.kelolagame') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            🎮 kelola Game
+        </a>
+        <a href="{{ route('admin.kelolaorder') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            📦 kelola Order
         </a>
 
     </nav>
@@ -149,7 +156,7 @@
 
         <!-- CONTENT -->
 
-        <main class="flex-1 p-8">
+        <main class="flex-1 p-8 bg-[#0b0b1f] min-h-screen">
 
             @yield('content')
 

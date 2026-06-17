@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\Admin\GameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,25 @@ Route::middleware('auth')->group(function () {
 });
 route::get('/admin/penjoki', [FrontController::class, 'penjoki'])->name('admin.penjoki');
 route::get('/admin/costumer', [FrontController::class, 'costumer'])->name('admin.costumer');
+route::get('/admin/kelolaartikel', [FrontController::class, 'kelolaartikel'])->name('admin.editartikel');
+route::get('/admin/kelolagame', [FrontController::class, 'kelolagame'])->name('admin.kelolagame');
+route::get('/admin/kelolaorder', [FrontController::class, 'kelolaorder'])->name('admin.kelolaorder');
+route::get('/admin/kelolapromo', [FrontController::class, 'kelolapromo'])->name('admin.kelolapromo');
+route::put('/admin/kelolagame/{game}', [GameController::class, 'update'])->name('admin.kelolagame.update');
+
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::resource('games', GameController::class);
+
+    });
+
+    Route::get(
+    '/admin/kelolagame',
+    [GameController::class, 'index']
+)->name('admin.kelolagame');
+
 /*
 |--------------------------------------------------------------------------
 | User

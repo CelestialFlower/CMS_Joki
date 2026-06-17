@@ -58,21 +58,26 @@ class FrontController extends Controller
     {
         return view('admin.costumer');
     }
-    public function store(Request $request)
+    public function riwayat()
     {
-        //
+        return view('user.riwayat');
+    }
+    public function kelolaartikel()
+    {
+        return view('admin.kelolaartikel');
+    }
+    public function kelolagame()
+    {
+        return view('admin.kelolagame');
     }
     public function order()
     {
         return view('user.order');
     }
-    public function riwayat()
+    public function kelolaorder()
     {
-        return view('user.riwayat');
+        return view('admin.kelolaorder');
     }
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //

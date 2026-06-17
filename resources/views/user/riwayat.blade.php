@@ -47,7 +47,7 @@
     <!-- Table -->
     <div class="bg-white rounded-2xl shadow-md overflow-hidden">
 
-        <table class="w-full">
+        <table class="w-full text-gray-800">
 
             <thead class="bg-indigo-600 text-white">
                 <tr>

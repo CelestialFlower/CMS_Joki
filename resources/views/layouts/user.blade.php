@@ -6,7 +6,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-[#0b0b1f] text-white">
 
 <!-- main NAVBAR -->
  <nav class="bg-[#0f0c29] border-b border-purple-800">
@@ -53,17 +53,7 @@
 
     @auth
 
-        <div class="text-right">
-
-            <div class="font-semibold">
-                {{ Auth::user()->name }}
-            </div>
-
-            <div class="text-xs text-purple-300">
-                {{ strtoupper(Auth::user()->role) }}
-            </div>
-
-        </div>
+    
 
         @if(Auth::user()->role == 'admin')
 
@@ -107,7 +97,7 @@
 
         <!-- SIDEBAR -->
 
-        <aside class="w-64 min-h-screen bg-indigo-900 text-white p-6">
+        <aside class="w-64 min-h-screen bg-[#17132f] text-white p-6 border-r border-purple-800">    
 
     <div class="mb-8">
 
@@ -159,7 +149,8 @@
 
         <!-- CONTENT -->
 
-        <main class="flex-1 p-8">
+        <main class="flex-1 p-8 bg-[#0b0b1f] min-h-screen">
+
 
             @yield('content')
 

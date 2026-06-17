@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 
-
 @section('content')
 
 <div class="space-y-6">
@@ -10,42 +9,37 @@
 
         <div>
             <h1 class="text-3xl font-bold text-white">
-                👥 Kelola Pelanggan
+                Kelola Artikel
             </h1>
 
-            <p class="text-gray-400 mt-1">
-                Kelola seluruh data pelanggan JOKI CSstore.
+            <p class="text-gray-400">
+                Kelola seluruh artikel website Joki CSstore
             </p>
         </div>
 
         <button
             class="bg-purple-600 hover:bg-purple-700 px-5 py-3 rounded-xl text-white font-semibold transition">
-            + Tambah Pelanggan
+            + Tambah Artikel
         </button>
 
     </div>
 
-    <!-- STATISTIK -->
-    <div class="grid md:grid-cols-4 gap-6">
+    <!-- STATISTIC -->
+    <div class="grid md:grid-cols-3 gap-6">
 
         <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Total Pelanggan</p>
-            <h2 class="text-3xl font-bold text-white mt-2">120</h2>
+            <p class="text-gray-400">Total Artikel</p>
+            <h2 class="text-3xl font-bold text-white mt-2">24</h2>
         </div>
 
         <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Aktif</p>
-            <h2 class="text-3xl font-bold text-green-400 mt-2">105</h2>
+            <p class="text-gray-400">Published</p>
+            <h2 class="text-3xl font-bold text-green-400 mt-2">18</h2>
         </div>
 
         <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Suspend</p>
-            <h2 class="text-3xl font-bold text-red-400 mt-2">5</h2>
-        </div>
-
-        <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Order Hari Ini</p>
-            <h2 class="text-3xl font-bold text-yellow-400 mt-2">18</h2>
+            <p class="text-gray-400">Draft</p>
+            <h2 class="text-3xl font-bold text-yellow-400 mt-2">6</h2>
         </div>
 
     </div>
@@ -53,23 +47,18 @@
     <!-- FILTER -->
     <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-5">
 
-        <div class="grid md:grid-cols-4 gap-4">
+        <div class="grid md:grid-cols-3 gap-4">
 
             <input
                 type="text"
-                placeholder="Cari nama pelanggan..."
-                class="bg-[#2b2650] border border-purple-700 rounded-xl px-4 py-3 text-white">
-
-            <input
-                type="text"
-                placeholder="Cari email..."
+                placeholder="Cari judul artikel..."
                 class="bg-[#2b2650] border border-purple-700 rounded-xl px-4 py-3 text-white">
 
             <select
                 class="bg-[#2b2650] border border-purple-700 rounded-xl px-4 py-3 text-white">
                 <option>Semua Status</option>
-                <option>Aktif</option>
-                <option>Suspend</option>
+                <option>Published</option>
+                <option>Draft</option>
             </select>
 
             <button
@@ -90,10 +79,10 @@
 
                 <tr>
                     <th class="p-4 text-left">ID</th>
-                    <th class="p-4 text-left">Nama</th>
-                    <th class="p-4 text-left">Email</th>
-                    <th class="p-4 text-left">No HP</th>
-                    <th class="p-4 text-left">Total Order</th>
+                    <th class="p-4 text-left">Judul</th>
+                    <th class="p-4 text-left">Kategori</th>
+                    <th class="p-4 text-left">Penulis</th>
+                    <th class="p-4 text-left">Tanggal</th>
                     <th class="p-4 text-left">Status</th>
                     <th class="p-4 text-center">Aksi</th>
                 </tr>
@@ -105,14 +94,17 @@
                 <tr class="border-b border-purple-900">
 
                     <td class="p-4">1</td>
-                    <td class="p-4 font-semibold">Reisa Irawan</td>
-                    <td class="p-4">reisa@gmail.com</td>
-                    <td class="p-4">081234567890</td>
-                    <td class="p-4">15</td>
+                    <td class="p-4">
+                        Tips Push Rank Mobile Legends Cepat Mythic
+                    </td>
+                    <td class="p-4">Mobile Legends</td>
+                    <td class="p-4">Admin</td>
+                    <td class="p-4">16 Juni 2026</td>
 
                     <td class="p-4">
-                        <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
-                            Aktif
+                        <span
+                            class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
+                            Published
                         </span>
                     </td>
 
@@ -122,17 +114,17 @@
 
                             <button
                                 class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm">
-                                Detail
-                            </button>
-
-                            <button
-                                class="bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm">
                                 Edit
                             </button>
 
                             <button
+                                class="bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm">
+                                Preview
+                            </button>
+
+                            <button
                                 class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-sm">
-                                Suspend
+                                Hapus
                             </button>
 
                         </div>
@@ -141,17 +133,20 @@
 
                 </tr>
 
-                <tr class="border-b border-purple-900">
+                <tr>
 
                     <td class="p-4">2</td>
-                    <td class="p-4 font-semibold">Budi Santoso</td>
-                    <td class="p-4">budi@gmail.com</td>
-                    <td class="p-4">089876543210</td>
-                    <td class="p-4">7</td>
+                    <td class="p-4">
+                        Cara Build Ellen Joe Terbaik ZZZ
+                    </td>
+                    <td class="p-4">Zenless Zone Zero</td>
+                    <td class="p-4">Admin</td>
+                    <td class="p-4">15 Juni 2026</td>
 
                     <td class="p-4">
-                        <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full">
-                            Suspend
+                        <span
+                            class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full">
+                            Draft
                         </span>
                     </td>
 
@@ -161,17 +156,17 @@
 
                             <button
                                 class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm">
-                                Detail
-                            </button>
-
-                            <button
-                                class="bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm">
                                 Edit
                             </button>
 
                             <button
-                                class="bg-green-600 hover:bg-green-700 px-3 py-2 rounded-lg text-sm">
-                                Aktifkan
+                                class="bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm">
+                                Preview
+                            </button>
+
+                            <button
+                                class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-sm">
+                                Hapus
                             </button>
 
                         </div>
