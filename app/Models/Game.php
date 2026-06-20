@@ -14,5 +14,12 @@ class Game extends Model
     'status',
     'thumbnail',
     'deskripsi'
+
+    
 ];
+
+public function artikels()
+{
+    return $this->hasMany(Artikel::class);
+}
 }

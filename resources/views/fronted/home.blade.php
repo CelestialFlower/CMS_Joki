@@ -33,10 +33,12 @@
 
                         </button>
 
-                        <button class="border px-6 py-3 rounded-xl">
+                        <button class="border px-6 py-3 rounded-xl" >
 
-                            Lihat Game
+                            <a href="{{ route('fronted.game') }}" class="text-white font-bold">
 
+                                Lihat game
+                            </a>
                         </button>
 
                     </div>
@@ -45,7 +47,7 @@
 
                 <div class="flex items-center justify-center">
 
-                    <img src="https://placehold.co/600x500" class="h-full object-cover">
+                    <img src="https://i.pinimg.com/736x/25/5d/b9/255db91af71de5648c87577c6dc1d182.jpg" class="h-full object-cover">
 
                 </div>
 
@@ -108,75 +110,65 @@
     </section>
 
     <!-- GAME SECTION -->
+<section class="container mx-auto px-6 py-16">
 
-    <section class="container mx-auto px-6 py-16">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-3xl font-bold">🎮 Game Populer</h2>
+        <a href="{{ route('fronted.game') }}" class="text-purple-400 hover:text-purple-300 text-sm">
+            Lihat Semua &rarr;
+        </a>
+    </div>
 
-        <h2 class="text-3xl font-bold mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
 
-            🎮 Game Populer
+        @forelse($games as $game)
 
-        </h2>
+            <div class="bg-[#2b2650] rounded-2xl overflow-hidden shadow-lg hover:scale-105 transition duration-300">
 
-        <div class="grid
-grid-cols-2
-md:grid-cols-4
-lg:grid-cols-6
-gap-5">
+                <img
+                    src="{{ $game->thumbnail ? asset('storage/'.$game->thumbnail) : 'https://placehold.co/400x220?text=No+Image' }}"
+                    class="w-full h-40 object-cover">
 
-            <!-- CARD -->
+                <div class="p-4">
+                    <h3 class="text-white font-bold text-base truncate">
+                        {{ $game->nama_game }}
+                    </h3>
 
-            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
+                    <p class="text-gray-400 text-xs mt-1">
+                        {{ $game->kategori }}
+                    </p>
 
-                <img src="https://placehold.co/300" class="rounded-xl">
+                    <div class="mt-3">
+                        @if($game->status == 'aktif')
+                            <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
+                                Aktif
+                            </span>
+                        @else
+                            <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-xs">
+                                Nonaktif
+                            </span>
+                        @endif
+                    </div>
 
-                <h3 class="mt-3 font-semibold">
-
-                    Mobile Legends
-
-                </h3>
-
-                <p class="text-sm text-gray-300">
-
-                    Mulai Rp5.000
-
-                </p>
+                    <a href="{{ route('fronted.game', $game->id) }}"
+                       class="block mt-4 bg-purple-600 hover:bg-purple-700 text-center text-white py-2 rounded-lg text-sm">
+                        Lihat Layanan
+                    </a>
+                </div>
 
             </div>
 
-            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
-                <img src="https://placehold.co/300" class="rounded-xl">
-                <h3 class="mt-3">Honkai Star Rail</h3>
-                <p class="text-sm text-gray-300">Mulai Rp5.000</p>
+        @empty
+
+            <div class="col-span-full text-center py-10">
+                <p class="text-gray-400">Belum ada game tersedia</p>
             </div>
 
-            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
-                <img src="https://placehold.co/300" class="rounded-xl">
-                <h3 class="mt-3">Genshin Impact</h3>
-                <p class="text-sm text-gray-300">Mulai Rp5.000</p>
-            </div>
+        @endforelse
 
-            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
-                <img src="https://placehold.co/300" class="rounded-xl">
-                <h3 class="mt-3">Wuthering Waves</h3>
-                <p class="text-sm text-gray-300">Mulai Rp5.000</p>
-            </div>
+    </div>
 
-            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
-                <img src="https://placehold.co/300" class="rounded-xl">
-                <h3 class="mt-3">Zenless Zone Zero</h3>
-                <p class="text-sm text-gray-300">Mulai Rp5.000</p>
-            </div>
-
-            <div class="card-bg rounded-2xl p-3 hover:scale-105 duration-300">
-                <img src="https://placehold.co/300" class="rounded-xl">
-                <h3 class="mt-3">Blue Archive</h3>
-                <p class="text-sm text-gray-300">Mulai Rp5.000</p> 
-            </div>
-
-        </div>
-
-    </section>
-
+</section>
     <!-- KEUNGGULAN -->
 
     <section class="container mx-auto px-6 py-16">
@@ -355,59 +347,49 @@ gap-5">
 
     <!-- ARTIKEL -->
 
-    <section class="container mx-auto px-6 py-16">
+    <section class="container mx-auto px-6 pb-16">
 
-        <h2 class="text-3xl font-bold mb-8">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-3xl font-bold">📰 Artikel Terbaru</h2>
+        <a href="{{ route('fronted.artikel') }}" class="text-purple-400 hover:text-purple-300 text-sm">
+            Lihat Semua &rarr;
+        </a>
+    </div>
 
-            Artikel Terbaru
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        </h2>
+        @forelse($articles as $article)
 
-        <div class="grid lg:grid-cols-3 gap-6">
+            <a href="{{ route('fronted.artikel', $article->slug ?? $article->id) }}"
+               class="bg-[#2b2650] rounded-2xl overflow-hidden shadow-lg hover:scale-105 transition duration-300">
 
-            <div class="card-bg rounded-2xl overflow-hidden">
+                <img
+                    src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://placehold.co/400x220?text=No+Image' }}"
+                    class="w-full h-40 object-cover">
 
-                <img src="https://placehold.co/600x300">
-
-                <div class="p-6">
-
-                    <h3 class="font-bold text-xl">
-
-                        Tips Push Rank Mythic
-
+                <div class="p-4">
+                    <h3 class="text-white font-semibold text-base line-clamp-2">
+                        {{ $article->judul }}
                     </h3>
 
-                    <p class="text-gray-300 mt-3">
-
-                        Strategi cepat naik rank.
-
+                    <p class="text-gray-400 text-xs mt-2">
+                        {{ $article->created_at->translatedFormat('d M Y') }}
                     </p>
-
                 </div>
 
+            </a>
+
+        @empty
+
+            <div class="col-span-full text-center py-10">
+                <p class="text-gray-400">Belum ada artikel tersedia</p>
             </div>
 
-            <div class="card-bg rounded-2xl overflow-hidden">
-                <img src="https://placehold.co/600x300">
-                <div class="p-6">
-                    <h3 class="font-bold">
-                        Build Terbaik
-                    </h3>
-                </div>
-            </div>
+        @endforelse
 
-            <div class="card-bg rounded-2xl overflow-hidden">
-                <img src="https://placehold.co/600x300">
-                <div class="p-6">
-                    <h3 class="font-bold">
-                        Meta Terbaru
-                    </h3>
-                </div>
-            </div>
+    </div>
 
-        </div>
-
-    </section>
+</section>
 
     <!-- CTA -->
 

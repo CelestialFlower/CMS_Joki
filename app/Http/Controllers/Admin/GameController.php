@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Game;
+use Illuminate\Support\Facades\Storage;
+
 
 class GameController extends Controller
 {
@@ -18,67 +20,81 @@ class GameController extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
 {
-    $thumbnail = null;
+    $request->validate([
+        'nama_game' => 'required',
+        'kategori' => 'required',
+        'deskripsi' => 'nullable',
+        'status' => 'required',
+        'thumbnail' => 'required|image'
+    ]);
 
-    if($request->hasFile('thumbnail'))
-    {
-        $thumbnail = $request
+    $thumbnailPath = null;
+
+    if ($request->hasFile('thumbnail')) {
+
+        $thumbnailPath = $request
             ->file('thumbnail')
-            ->store('games','public');
+            ->store('games', 'public');
     }
 
     Game::create([
         'nama_game' => $request->nama_game,
         'kategori' => $request->kategori,
+        'deskripsi' => $request->deskripsi,
         'status' => $request->status,
-        'thumbnail' => $thumbnail
+        'thumbnail' => $thumbnailPath,
     ]);
 
-    return back();
+    return redirect()->back()
+        ->with('success', 'Game berhasil ditambahkan');
 }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Game $game)
+   
+   public function update(Request $request, Game $game)
 {
+    $request->validate([
+        'nama_game' => 'required|string|max:255',
+        'kategori' => 'required|string|max:255',
+        'deskripsi' => 'nullable|string',
+        'status' => 'required|in:aktif,nonaktif',
+        'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
+
     $data = [
         'nama_game' => $request->nama_game,
         'kategori' => $request->kategori,
+        'deskripsi' => $request->deskripsi,
         'status' => $request->status,
     ];
 
-    if ($request->hasFile('thumbnail'))
-    {
+    if ($request->hasFile('thumbnail')) {
+
+        // Hapus thumbnail lama (opsional)
+        if ($game->thumbnail && Storage::disk('public')->exists($game->thumbnail)) {
+            Storage::disk('public')->delete($game->thumbnail);
+        }
+
         $path = $request
             ->file('thumbnail')
             ->store('games', 'public');
@@ -92,9 +108,7 @@ class GameController extends Controller
         ->with('success', 'Game berhasil diperbarui');
 }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+  
     public function destroy(Game $game)
 {
     $game->delete();

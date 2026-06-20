@@ -127,17 +127,12 @@
             🏠 Dashboard
         </a>
 
-        <a href="{{ route('admin.penjoki') }}"
-           class="block p-3 rounded-lg hover:bg-indigo-700">
-            🎮 kelola Penjoki
-        </a>
-
         <a href="{{ route('admin.costumer') }}"
            class="block p-3 rounded-lg hover:bg-indigo-700">
             🧑‍💼 kelola Pelanggan
         </a>
 
-        <a href="{{ route('admin.editartikel') }}"
+        <a href="{{ route('admin.kelolaartikel') }}"
            class="block p-3 rounded-lg hover:bg-indigo-700">
             📝 kelola Artikel  
         </a>

@@ -1,334 +1,123 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('layouts.front')
+
 @section('content')
     <!-- HERO --><section class="container mx-auto px-6 py-10">
 
-    <!-- HEADER -->
-
-    <div class="text-center mb-12">
-
-        <h1 class="text-5xl font-bold">
-            Artikel Gaming
-        </h1>
-
-        <p class="text-gray-400 mt-4">
-            Tips, Guide, Build Character, Meta dan Update Game Terbaru
-        </p>
-
-    </div>
-
-    <!-- SEARCH -->
-
-    <div class="max-w-xl mx-auto mb-12">
-
-        <input type="text" placeholder="Cari artikel..."
-            class="w-full bg-[#16122D] border border-purple-700 rounded-xl p-4">
-
-    </div>
 
     <!-- FEATURED ARTICLE -->
+    @php
+$featured = $artikels->first();
+@endphp
 
-    <div class="bg-[#16122D]
-        rounded-3xl
-        overflow-hidden
-        mb-16">
+@if($featured)
 
-        <div class="grid lg:grid-cols-2">
+<div class="bg-[#16122D] rounded-3xl overflow-hidden mb-16">
 
-            <img src="https://placehold.co/800x500" class="w-full h-full object-cover">
+    <div class="grid lg:grid-cols-2">
 
-            <div class="p-10">
+        <img
+            src="{{ asset('storage/'.$featured->thumbnail) }}"
+            class="w-full h-full object-cover">
 
-                <span class="bg-purple-600 px-4 py-2 rounded-full text-sm">
+        <div class="p-10">
 
-                    Featured
+            <span class="bg-purple-600 px-4 py-2 rounded-full text-sm">
 
-                </span>
+                Featured
 
-                <h2 class="text-4xl font-bold mt-6">
+            </span>
 
-                    Tips Push Rank Mythic Cepat di Mobile Legends
+            <h2 class="text-4xl font-bold mt-6">
 
-                </h2>
+                {{ $featured->judul }}
 
-                <p class="text-gray-400 mt-5">
+            </h2>
 
-                    Pelajari strategi rotasi, draft pick,
-                    dan hero meta terbaru untuk mempercepat
-                    perjalanan menuju Mythic Glory.
+            <p class="text-gray-400 mt-5">
 
-                </p>
+                {{ $featured->isi }}
 
-                <button class="mt-8 bg-purple-600 px-6 py-3 rounded-xl">
+            </p>
 
-                    Baca Selengkapnya
-
-                </button>
-
-            </div>
-
+            
+            
         </div>
 
     </div>
+
+</div>
+
+@endif
 
     <!-- ARTICLE GRID -->
 
-    <div class="grid lg:grid-cols-3 gap-8">
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
 
-        <!-- CARD 1 -->
+    @forelse($artikels as $artikel)
 
-        <div class="bg-[#16122D]
-            rounded-3xl
-            overflow-hidden
-            hover:scale-105
-            duration-300">
+    <div class="bg-[#16122D] rounded-3xl overflow-hidden hover:scale-105 duration-300">
 
-            <img src="https://placehold.co/600x350" class="w-full">
+        <!-- THUMBNAIL -->
+        @if($artikel->thumbnail)
 
-            <div class="p-6">
+            <img
+                src="{{ asset('storage/'.$artikel->thumbnail) }}"
+                class="w-full h-56 object-cover">
 
-                <span class="text-purple-400 text-sm">
+        @else
 
-                    Zenless Zone Zero
+            <img
+                src="https://placehold.co/600x350?text=No+Image"
+                class="w-full h-56 object-cover">
 
-                </span>
+        @endif
 
-                <h3 class="text-xl font-bold mt-3">
+        <div class="p-6">
 
-                    Build Ellen Joe Terbaik 2026
+            <!-- NAMA GAME -->
+            <span class="text-purple-400 text-sm">
 
-                </h3>
+                {{ $artikel->game->nama_game }}
 
-                <p class="text-gray-400 mt-3">
+            </span>
 
-                    Panduan lengkap build,
-                    W-Engine dan Team Composition.
+            <!-- JUDUL -->
+            <h3 class="text-xl font-bold mt-3">
 
-                </p>
+                {{ $artikel->judul }}
 
-                <a href="#" class="inline-block mt-5 text-purple-400">
+            </h3>
 
-                    Baca Artikel →
+            <!-- ISI -->
+            <p class="text-gray-400 mt-3">
 
-                </a>
+                {{ Str::limit(strip_tags($artikel->isi), 150) }}
 
-            </div>
+            </p>
 
-        </div>
-
-        <!-- CARD 2 -->
-
-        <div class="bg-[#16122D]
-            rounded-3xl
-            overflow-hidden">
-
-            <img src="https://placehold.co/600x350">
-
-            <div class="p-6">
-
-                <span class="text-purple-400 text-sm">
-
-                    Wuthering Waves
-
-                </span>
-
-                <h3 class="text-xl font-bold mt-3">
-
-                    Guide Rover untuk Pemula
-
-                </h3>
-
-                <p class="text-gray-400 mt-3">
-
-                    Cara cepat meningkatkan Union Level
-                    dan resource farming.
-
-                </p>
-
-                <a href="#" class="inline-block mt-5 text-purple-400">
-
-                    Baca Artikel →
-
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- CARD 3 -->
-
-        <div class="bg-[#16122D]
-            rounded-3xl
-            overflow-hidden">
-
-            <img src="https://placehold.co/600x350">
-
-            <div class="p-6">
-
-                <span class="text-purple-400 text-sm">
-
-                    Honkai Star Rail
-
-                </span>
-
-                <h3 class="text-xl font-bold mt-3">
-
-                    Tier List Karakter Terbaru
-
-                </h3>
-
-                <p class="text-gray-400 mt-3">
-
-                    Karakter terbaik untuk Memory of Chaos
-                    dan endgame content.
-
-                </p>
-
-                <a href="#" class="inline-block mt-5 text-purple-400">
-
-                    Baca Artikel →
-
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- CARD 4 -->
-
-        <div class="bg-[#16122D]
-            rounded-3xl
-            overflow-hidden">
-
-            <img src="https://placehold.co/600x350">
-
-            <div class="p-6">
-
-                <span class="text-purple-400 text-sm">
-
-                    Blue Archive
-
-                </span>
-
-                <h3 class="text-xl font-bold mt-3">
-
-                    Student Terbaik untuk Raid
-
-                </h3>
-
-                <p class="text-gray-400 mt-3">
-
-                    Daftar karakter wajib untuk
-                    Total Assault.
-
-                </p>
-
-                <a href="#" class="inline-block mt-5 text-purple-400">
-
-                    Baca Artikel →
-
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- CARD 5 -->
-
-        <div class="bg-[#16122D]
-            rounded-3xl
-            overflow-hidden">
-
-            <img src="https://placehold.co/600x350">
-
-            <div class="p-6">
-
-                <span class="text-purple-400 text-sm">
-
-                    Nikke
-
-                </span>
-
-                <h3 class="text-xl font-bold mt-3">
-
-                    Team Campaign Terkuat
-
-                </h3>
-
-                <p class="text-gray-400 mt-3">
-
-                    Rekomendasi squad terbaik
-                    untuk progress story.
-
-                </p>
-
-                <a href="#" class="inline-block mt-5 text-purple-400">
-
-                    Baca Artikel →
-
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- CARD 6 -->
-
-        <div class="bg-[#16122D]
-            rounded-3xl
-            overflow-hidden">
-
-            <img src="https://placehold.co/600x350">
-
-            <div class="p-6">
-
-                <span class="text-purple-400 text-sm">
-
-                    Genshin Impact
-
-                </span>
-
-                <h3 class="text-xl font-bold mt-3">
-
-                    Build Mavuika Terbaik
-
-                </h3>
-
-                <p class="text-gray-400 mt-3">
-
-                    Weapon, artifact dan team
-                    terbaik untuk Mavuika.
-
-                </p>
-
-                <a href="#" class="inline-block mt-5 text-purple-400">
-
-                    Baca Artikel →
-
-                </a>
-
-            </div>
-
+            <a
+    href="{{ route('fronted.artikel.show', $artikel->id) }}"
+    class="inline-block mt-5 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg">
+    Baca Selengkapnya
+</a>
         </div>
 
     </div>
 
-    <!-- PAGINATION -->
+    @empty
 
-    <div class="flex justify-center gap-3 mt-16">
+    <div class="col-span-3 text-center py-20 text-gray-400">
 
-        <button class="bg-[#16122D] w-12 h-12 rounded-xl">
-            1
-        </button>
-
-        <button class="bg-[#16122D] w-12 h-12 rounded-xl">
-            2
-        </button>
-
-        <button class="bg-[#16122D] w-12 h-12 rounded-xl">
-            3
-        </button>
+        Belum ada artikel.
 
     </div>
+
+    @endforelse
+
+</div>
 
 </section>
 @endsection

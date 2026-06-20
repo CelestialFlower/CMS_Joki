@@ -4,182 +4,318 @@
 
 <div class="space-y-6">
 
-    <!-- HEADER -->
-    <div class="flex justify-between items-center">
+   <form
+action="{{ route('admin.artikel.store') }}"
+method="POST"
+enctype="multipart/form-data">
 
-        <div>
-            <h1 class="text-3xl font-bold text-white">
-                Kelola Artikel
-            </h1>
+@csrf
 
-            <p class="text-gray-400">
-                Kelola seluruh artikel website Joki CSstore
-            </p>
+<div class="grid md:grid-cols-2 gap-4">
+
+    <!-- PILIH GAME -->
+    <select
+        name="game_id"
+        required
+        class="bg-[#2b2650] text-white p-3 rounded-lg">
+
+        <option value="">
+            Pilih Game
+        </option>
+
+        @foreach($games as $game)
+
+            <option value="{{ $game->id }}">
+                {{ $game->nama_game }}
+            </option>
+
+        @endforeach
+
+    </select>
+
+    <!-- JUDUL -->
+    <input
+        type="text"
+        name="judul"
+        placeholder="Judul Artikel"
+        required
+        class="bg-[#2b2650] text-white p-3 rounded-lg">
+
+</div>
+
+<textarea
+    name="isi"
+    rows="8"
+    placeholder="Isi Artikel..."
+    required
+    class="w-full mt-4 bg-[#2b2650] text-white p-3 rounded-lg"></textarea>
+
+<input
+    type="file"
+    name="thumbnail"
+    class="mt-4 text-white">
+
+<select
+    name="status"
+    class="mt-4 bg-[#2b2650] text-white p-3 rounded-lg">
+
+    <option value="publish">
+        Publish
+    </option>
+
+    <option value="draft">
+        Draft
+    </option>
+
+</select>
+
+<button
+    class="mt-4 bg-purple-600 px-5 py-3 rounded-lg text-white">
+
+    Simpan Artikel
+
+</button>
+
+</form>
+<table class="w-full text-white">
+
+<thead class="bg-[#2b2650] rounded-2xl overflow-hidden border border-purple-800">
+<tr>
+    <th>Thumbnail</th>
+    <th>Game</th>
+    <th>Judul</th>
+    <th>Status</th>
+    <th>Aksi</th>
+</tr>
+</thead>
+
+<tbody class="bg-[#1f1b3a] rounded-2xl overflow-hidden border border-purple-800">
+
+@forelse($artikels as $artikel)
+
+<tr class="border-b border-purple-900">
+
+
+<td class="p-10">
+
+    @if($artikel->thumbnail)
+
+        <img
+            src="{{ asset('storage/'.$artikel->thumbnail) }}"
+            class="w-20 h-20 object-cover rounded-lg">
+
+    @else
+
+        <div class="w-20 h-20 bg-gray-700 rounded-lg flex items-center justify-center">
+            📰
         </div>
 
+    @endif
+
+</td>
+
+<td class="p-10 text-white">
+    {{ $artikel->game->nama_game }}
+</td>
+
+<td class="p-10 text-white font-semibold">
+    {{ $artikel->judul }}
+</td>
+
+<td class="p-10">
+
+    @if($artikel->status == 'publish')
+
+        <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
+            Publish
+        </span>
+
+    @else
+
+        <span class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-xs">
+            Draft
+        </span>
+
+    @endif
+
+</td>
+
+<td class="p-10">
+
+    <div class="flex gap-2">
+
         <button
-            class="bg-purple-600 hover:bg-purple-700 px-5 py-3 rounded-xl text-white font-semibold transition">
-            + Tambah Artikel
+            type="button"
+            data-id="{{ $artikel->id }}"
+            data-judul="{{ $artikel->judul }}"
+            data-status="{{ $artikel->status }}"
+            data-game="{{ $artikel->game_id }}"
+            data-isi="{{ $artikel->isi }}"
+            onclick="openEditArtikel(this)"
+            class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-white">
+
+            Edit
+
+        </button>
+
+        <form
+            action="{{ route('admin.artikel.destroy',$artikel->id) }}"
+            method="POST">
+
+            @csrf
+            @method('DELETE')
+
+            <button
+                onclick="return confirm('Hapus artikel ini?')"
+                class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-white">
+
+                Hapus
+
+            </button>
+
+        </form>
+
+    </div>
+
+</td>
+
+
+</tr>
+
+@empty
+
+<tr>
+
+
+<td colspan="5"
+    class="text-center py-10 text-gray-400">
+
+    Belum ada artikel
+
+</td>
+
+
+</tr>
+
+@endforelse
+
+</tbody>
+
+
+</table>
+<div
+    id="editArtikelModal"
+    class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+
+
+<div class="bg-[#1f1b3a] w-full max-w-2xl rounded-2xl p-6">
+
+    <div class="flex justify-between mb-5">
+
+        <h2 class="text-xl font-bold text-white">
+            Edit Artikel
+        </h2>
+
+        <button
+            onclick="closeEditArtikel()"
+            class="text-white text-3xl">
+
+            &times;
+
         </button>
 
     </div>
 
-    <!-- STATISTIC -->
-    <div class="grid md:grid-cols-3 gap-6">
+    <form
+        id="editArtikelForm"
+        method="POST"
+        enctype="multipart/form-data">
 
-        <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Total Artikel</p>
-            <h2 class="text-3xl font-bold text-white mt-2">24</h2>
-        </div>
+        @csrf
+        @method('PUT')
 
-        <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Published</p>
-            <h2 class="text-3xl font-bold text-green-400 mt-2">18</h2>
-        </div>
+        <input
+            type="text"
+            id="edit_judul"
+            name="judul"
+            class="w-full bg-[#2b2650] text-white p-3 rounded-lg mb-3">
 
-        <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Draft</p>
-            <h2 class="text-3xl font-bold text-yellow-400 mt-2">6</h2>
-        </div>
+        <textarea
+            id="edit_isi"
+            name="isi"
+            rows="8"
+            class="w-full bg-[#2b2650] text-white p-3 rounded-lg mb-3"></textarea>
 
-    </div>
+        <select
+            id="edit_status"
+            name="status"
+            class="w-full bg-[#2b2650] text-white p-3 rounded-lg mb-3">
 
-    <!-- FILTER -->
-    <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-5">
+            <option value="publish">Publish</option>
+            <option value="draft">Draft</option>
 
-        <div class="grid md:grid-cols-3 gap-4">
+        </select>
 
-            <input
-                type="text"
-                placeholder="Cari judul artikel..."
-                class="bg-[#2b2650] border border-purple-700 rounded-xl px-4 py-3 text-white">
+        <button
+            type="submit"
+            class="w-full bg-purple-600 py-3 rounded-lg text-white">
 
-            <select
-                class="bg-[#2b2650] border border-purple-700 rounded-xl px-4 py-3 text-white">
-                <option>Semua Status</option>
-                <option>Published</option>
-                <option>Draft</option>
-            </select>
+            Simpan Perubahan
 
-            <button
-                class="bg-purple-600 hover:bg-purple-700 rounded-xl text-white font-semibold">
-                Cari
-            </button>
+        </button>
 
-        </div>
-
-    </div>
-
-    <!-- TABLE -->
-    <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl overflow-hidden">
-
-        <table class="w-full">
-
-            <thead class="bg-purple-700 text-white">
-
-                <tr>
-                    <th class="p-4 text-left">ID</th>
-                    <th class="p-4 text-left">Judul</th>
-                    <th class="p-4 text-left">Kategori</th>
-                    <th class="p-4 text-left">Penulis</th>
-                    <th class="p-4 text-left">Tanggal</th>
-                    <th class="p-4 text-left">Status</th>
-                    <th class="p-4 text-center">Aksi</th>
-                </tr>
-
-            </thead>
-
-            <tbody class="text-white">
-
-                <tr class="border-b border-purple-900">
-
-                    <td class="p-4">1</td>
-                    <td class="p-4">
-                        Tips Push Rank Mobile Legends Cepat Mythic
-                    </td>
-                    <td class="p-4">Mobile Legends</td>
-                    <td class="p-4">Admin</td>
-                    <td class="p-4">16 Juni 2026</td>
-
-                    <td class="p-4">
-                        <span
-                            class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
-                            Published
-                        </span>
-                    </td>
-
-                    <td class="p-4">
-
-                        <div class="flex justify-center gap-2">
-
-                            <button
-                                class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm">
-                                Edit
-                            </button>
-
-                            <button
-                                class="bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm">
-                                Preview
-                            </button>
-
-                            <button
-                                class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-sm">
-                                Hapus
-                            </button>
-
-                        </div>
-
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td class="p-4">2</td>
-                    <td class="p-4">
-                        Cara Build Ellen Joe Terbaik ZZZ
-                    </td>
-                    <td class="p-4">Zenless Zone Zero</td>
-                    <td class="p-4">Admin</td>
-                    <td class="p-4">15 Juni 2026</td>
-
-                    <td class="p-4">
-                        <span
-                            class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full">
-                            Draft
-                        </span>
-                    </td>
-
-                    <td class="p-4">
-
-                        <div class="flex justify-center gap-2">
-
-                            <button
-                                class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm">
-                                Edit
-                            </button>
-
-                            <button
-                                class="bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm">
-                                Preview
-                            </button>
-
-                            <button
-                                class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-sm">
-                                Hapus
-                            </button>
-
-                        </div>
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
+    </form>
 
 </div>
+
+
+</div>
+
+</div>
+<script>
+
+function openEditArtikel(btn)
+{
+    let id = btn.dataset.id;
+
+    document.getElementById('editArtikelModal')
+        .classList.remove('hidden');
+
+    document.getElementById('editArtikelModal')
+        .classList.add('flex');
+
+    document.getElementById('edit_judul').value =
+        btn.dataset.judul;
+
+    document.getElementById('edit_isi').value =
+        btn.dataset.isi;
+
+    document.getElementById('edit_status').value =
+        btn.dataset.status;
+
+    document.getElementById('editArtikelForm').action =
+        "{{ url('/admin/artikel') }}/" + id;
+}
+
+function closeEditArtikel()
+{
+    document.getElementById('editArtikelModal')
+        .classList.add('hidden');
+
+    document.getElementById('editArtikelModal')
+        .classList.remove('flex');
+}
+
+window.onclick = function(event)
+{
+    let modal =
+        document.getElementById('editArtikelModal');
+
+    if(event.target === modal)
+    {
+        closeEditArtikel();
+    }
+}
+
+</script>
 @endsection

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Admin\GameController;
+use App\Http\Controllers\Admin\ArtikelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,11 +13,50 @@ use App\Http\Controllers\Admin\GameController;
 */
 
 Route::get('/', [FrontController::class, 'home'])->name('fronted.home');
-Route::get('/game', [FrontController::class, 'game'])->name('fronted.game');
+Route::get('/game', [FrontController::class, 'game'])
+    ->name('game');
+    Route::get('/game', [FrontController::class, 'game'])
+    ->name('fronted.game');
 Route::get('/artikel', [FrontController::class, 'artikel'])->name('fronted.artikel');
 Route::get('/tentang', [FrontController::class, 'tentang'])->name('fronted.tentang');
 Route::get('/kontak', [FrontController::class, 'kontak'])->name('fronted.kontak');
 
+
+/*|--------------------------------------------------------------------------
+| game
+|--------------------------------------------------------------------------*/
+Route::get('/game/{id}', [FrontController::class, 'showGame'])
+    ->name('fronted.game.show');
+
+/*
+|--------------------------------------------------------------------------
+| artikel
+|--------------------------------------------------------------------------
+*/
+
+
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get(
+            '/kelolaartikel',
+            [ArtikelController::class, 'index']
+        )->name('kelolaartikel');
+
+        Route::post(
+            '/artikel',
+            [ArtikelController::class, 'store']
+        )->name('artikel.store');
+
+    });
+Route::put('/admin/artikel/{artikel}', [ArtikelController::class,'update'])
+    ->name('admin.artikel.update');
+
+Route::delete('/admin/artikel/{artikel}', [ArtikelController::class,'destroy'])
+    ->name('admin.artikel.destroy');
+Route::get('/artikel/{id}', [FrontController::class, 'showArtikel'])
+    ->name('fronted.artikel.show');
 /*
 |--------------------------------------------------------------------------
 | Dashboard
@@ -53,7 +93,6 @@ Route::middleware('auth')->group(function () {
 });
 route::get('/admin/penjoki', [FrontController::class, 'penjoki'])->name('admin.penjoki');
 route::get('/admin/costumer', [FrontController::class, 'costumer'])->name('admin.costumer');
-route::get('/admin/kelolaartikel', [FrontController::class, 'kelolaartikel'])->name('admin.editartikel');
 route::get('/admin/kelolagame', [FrontController::class, 'kelolagame'])->name('admin.kelolagame');
 route::get('/admin/kelolaorder', [FrontController::class, 'kelolaorder'])->name('admin.kelolaorder');
 route::get('/admin/kelolapromo', [FrontController::class, 'kelolapromo'])->name('admin.kelolapromo');

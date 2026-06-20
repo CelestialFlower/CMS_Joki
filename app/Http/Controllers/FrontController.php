@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Game;    
+use App\Models\Artikel;
 class FrontController extends Controller
 {
     /**
@@ -14,20 +15,43 @@ class FrontController extends Controller
         return view('layouts.front');
     }
     
-    public function home()
-    {
-        return view('fronted.home');
-    }
+
+
+public function home()
+{
+    $games = Game::where('status', 'aktif')->get();
+
+    $articles = Artikel::with('game')
+        ->where('status', 'publish')
+        ->latest()
+        ->take(8)
+        ->get();
+
+    return view('fronted.home', compact(
+        'games',
+        'articles'
+    ));
+}
 
     public function game()
     {
-        return view('fronted.game');
+        $games = Game::all();
+
+        return view('fronted.game', compact('games'));
     }
 
-    public function artikel()
-    {
-        return view('fronted.artikel');
-    }
+public function artikel()
+{
+    $artikels = Artikel::with('game')
+        ->where('status', 'publish')
+        ->latest()
+        ->get();
+
+    return view(
+        'fronted.artikel',
+        compact('artikels')
+    );
+}
     
     public function tentang()
     {
@@ -78,11 +102,26 @@ class FrontController extends Controller
     {
         return view('admin.kelolaorder');
     }
-    public function show(string $id)
-    {
-        //
-    }
+   public function showGame($id)
+{
+    $game = Game::findOrFail($id);
 
+    $artikels = Artikel::where('game_id', $id)
+        ->where('status', 'publish')
+        ->latest()
+        ->get();
+
+    return view(
+        'fronted.game-detail',
+        compact('game', 'artikels')
+    );
+}
+public function showArtikel($id)
+{
+    $artikel = Artikel::with('game')->findOrFail($id);
+
+    return view('fronted.artikel-detail', compact('artikel'));
+}
     /**
      * Show the form for editing the specified resource.
      */

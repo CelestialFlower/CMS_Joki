@@ -23,7 +23,7 @@
 
         <div>
 
-            <img src="https://placehold.co/800x500" class="rounded-3xl">
+            <img src="https://i.pinimg.com/736x/63/4d/39/634d39442e98da688bebc9c6da906a3e.jpg" class="rounded-3xl">
 
         </div>
 
