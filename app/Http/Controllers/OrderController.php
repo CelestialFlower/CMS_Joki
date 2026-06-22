@@ -19,21 +19,29 @@ class OrderController extends Controller
 }
 public function store(Request $request)
 {
-    if(auth()->user()->status == 'suspend')
-    {
-            return back()->with('suspended', true);
+    // CEK STATUS USER
+    if (auth()->user()->status == 'suspend') {
+        return back()->with('suspended', true);
     }
 
+    // VALIDASI FORM
+    $request->validate([
+        'game_id' => 'required|exists:games,id',
+        'nomor_hp' => 'required|string|min:10|max:15',
+    ], [
+        'game_id.required' => 'Silakan pilih game terlebih dahulu.',
+        'game_id.exists' => 'Game yang dipilih tidak tersedia.',
+        'nomor_hp.required' => 'Nomor HP wajib diisi.',
+        'nomor_hp.min' => 'Nomor HP minimal 10 angka.',
+        'nomor_hp.max' => 'Nomor HP maksimal 15 angka.',
+    ]);
+
+    // SIMPAN ORDER
     Order::create([
-
         'user_id' => auth()->id(),
-
         'game_id' => $request->game_id,
-
         'nomor_hp' => $request->nomor_hp,
-
-        'status' => 'pending'
-
+        'status' => 'pending',
     ]);
 
     return back()->with(

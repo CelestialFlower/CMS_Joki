@@ -26,13 +26,23 @@
                     </p>
 
                     <div class="mt-8 flex gap-4">
-
+                        @auth
                         <button class="bg-yellow-500 px-6 py-3 rounded-xl font-bold text-black">
 
-                            Pesan Sekarang
+                            <a href="{{ route('user.order') }}">
+                                Order Sekarang
+                            </a>
 
                         </button>
+                        @else
+                        <button type="button" onclick="openLoginPopup()" class="bg-yellow-500 px-6 py-3 rounded-xl font-bold text-black">
 
+                            
+                                Order Sekarang
+                            
+
+                        </button>
+                        @endauth
                         <button class="border px-6 py-3 rounded-xl" >
 
                             <a href="{{ route('fronted.game') }}" class="text-white font-bold">
@@ -404,7 +414,7 @@ text-center">
 
             <h2 class="text-4xl font-black">
 
-                Siap Naik Rank?
+                
 
             </h2>
 
@@ -415,7 +425,10 @@ text-center">
 
             </p>
 
-            <button class="mt-8
+                <br>
+
+                @auth
+                        <button class="mt-8
                                 bg-yellow-400
                                 text-black
                                 font-bold
@@ -423,13 +436,98 @@ text-center">
                                 py-4
                                 rounded-xl">
 
-                <a href="{{ route('user.order') }}">
-                    Order Sekarang
-                </a>
+                            <a href="{{ route('user.order') }}">
+                                Order Sekarang
+                            </a>
 
-            </button>
+                        </button>
+                        @else
+                        <button type="button" onclick="openLoginPopup()" class="bg-yellow-500 px-6 py-3 rounded-xl font-bold text-black">
+
+                            
+                                Order Sekarang
+                            
+
+                        </button>
+                 @endauth
+
+          
 
         </div>
 
     </section>
+    {{-- POPUP LOGIN --}}
+<div id="loginPopup"
+     class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50 px-4">
+
+    <div class="bg-[#1f1b3a] border border-purple-700 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+
+        <div class="flex justify-between items-center mb-5">
+            <h2 class="text-xl font-bold text-white">
+                Login Diperlukan
+            </h2>
+
+            <button
+                type="button"
+                onclick="closeLoginPopup()"
+                class="text-gray-400 hover:text-white text-3xl leading-none">
+                &times;
+            </button>
+        </div>
+
+        <div class="text-center">
+
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-500/20 flex items-center justify-center text-3xl">
+                🔒
+            </div>
+
+            <p class="text-gray-300 leading-relaxed">
+                Silakan <span class="text-purple-400 font-semibold">login</span>
+                atau <span class="text-purple-400 font-semibold">daftar</span>
+                terlebih dahulu untuk melakukan pesanan joki.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3 mt-6">
+
+                <a href="{{ route('login') }}"
+                   class="bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl font-semibold">
+                    Login
+                </a>
+
+                <a href="{{ route('register') }}"
+                   class="bg-[#2b2650] hover:bg-[#393263] text-white py-3 rounded-xl font-semibold border border-purple-700">
+                    Daftar
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function openLoginPopup()
+{
+    const popup = document.getElementById('loginPopup');
+
+    popup.classList.remove('hidden');
+    popup.classList.add('flex');
+}
+
+function closeLoginPopup()
+{
+    const popup = document.getElementById('loginPopup');
+
+    popup.classList.add('hidden');
+    popup.classList.remove('flex');
+}
+
+document.getElementById('loginPopup').addEventListener('click', function(event) {
+    if (event.target === this) {
+        closeLoginPopup();
+    }
+});
+</script>
 @endsection

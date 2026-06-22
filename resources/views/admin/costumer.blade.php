@@ -63,7 +63,6 @@
                     <th class="p-4 text-left">ID</th>
                     <th class="p-4 text-left">Nama</th>
                     <th class="p-4 text-left">Email</th>
-                    <th class="p-4 text-left">No HP</th>
                     <th class="p-4 text-left">Total Order</th>
                     <th class="p-4 text-left">Status</th>
                     <th class="p-4 text-center">Aksi</th>
@@ -91,9 +90,6 @@
         {{ $user->email }}
     </td>
 
-    <td class="p-4">
-        -
-    </td>
 
     <td class="p-4">
         {{ $user->orders_count }}

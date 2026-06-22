@@ -97,6 +97,7 @@ public function artikel()
         return view('user.status');
     }
     
+    
     public function rolestatus()
     {
     dd(auth()->user()->role);
@@ -104,9 +105,11 @@ public function artikel()
     return view('user.status');
     }
     public function penjoki()
+    
     {
         return view('admin.penjoki');
     }
+    
     public function costumer()
 {
     $pelanggan = User::where('role', 'user')
@@ -139,7 +142,8 @@ public function artikel()
         )
     );
 }
-    public function riwayat()
+    
+public function riwayat()
     {
         return view('user.riwayat');
     }
@@ -151,10 +155,17 @@ public function artikel()
     {
         return view('admin.kelolagame');
     }
-    public function order()
-    {
-        return view('user.order');
-    }
+    public function order(Request $request)
+{
+    $games = Game::where('status', 'aktif')->get();
+
+    $selectedGameId = $request->game_id;
+
+    return view('user.order', compact(
+        'games',
+        'selectedGameId'
+    ));
+}
 
    
     public function showGame($id)
