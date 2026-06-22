@@ -20,13 +20,13 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-    'name',
-    'email',
-    'password',
-    'role',
-    'status',
+        'name',
+        'email',
+        'password',
+        'role',
+        'status',
     ];
-        public function orders()
+    public function orders()
     {
         return $this->hasMany(Order::class);
     }
@@ -39,20 +39,23 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-public function history()
-{
-    $orders = auth()
-        ->user()
-        ->orders()
-        ->with('game')
-        ->latest()
-        ->get();
 
-    return view(
-        'user.history',
-        compact('orders')
-    );
-}
+    public function history()
+    {
+        $orders = auth()
+            ->user()
+            ->orders()
+            ->with('game')
+            ->latest()
+            ->get();
+
+        return view(
+            'user.history',
+            compact('orders')
+        );
+    }
+
+
     /**
      * Get the attributes that should be cast.
      *
@@ -65,5 +68,4 @@ public function history()
             'password' => 'hashed',
         ];
     }
-    
 }

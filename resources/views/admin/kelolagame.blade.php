@@ -5,20 +5,20 @@
 
     {{-- ALERT SUCCESS --}}
     @if(session('success'))
-        <div class="bg-green-500/20 border border-green-500 text-green-300 p-4 rounded-xl">
-            {{ session('success') }}
-        </div>
+    <div class="bg-green-500/20 border border-green-500 text-green-300 p-4 rounded-xl">
+        {{ session('success') }}
+    </div>
     @endif
 
     {{-- ALERT ERROR --}}
     @if ($errors->any())
-        <div class="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-xl">
-            <ul class="list-disc ml-5">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-xl">
+        <ul class="list-disc ml-5">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <!-- HEADER -->
@@ -105,14 +105,14 @@
                 <div class="md:col-span-2">
 
                     <label class="text-gray-300">
-                      Deskripsi
-                     </label>
+                        Deskripsi
+                    </label>
 
-                     <textarea
-        name="deskripsi"
-        rows="4"
-        placeholder="Masukkan deskripsi game..."
-        class="w-full mt-2 bg-[#2b2650] text-white rounded-lg p-3 border border-purple-700">{{ old('deskripsi') }}</textarea>
+                    <textarea
+                        name="deskripsi"
+                        rows="4"
+                        placeholder="Masukkan deskripsi game..."
+                        class="w-full mt-2 bg-[#2b2650] text-white rounded-lg p-3 border border-purple-700">{{ old('deskripsi') }}</textarea>
 
                 </div>
 
@@ -174,15 +174,15 @@
 
                         @if($game->thumbnail)
 
-                            <img
-                                src="{{ asset('storage/'.$game->thumbnail) }}"
-                                class="w-20 h-20 object-cover rounded-lg">
+                        <img
+                            src="{{ asset('storage/'.$game->thumbnail) }}"
+                            class="w-20 h-20 object-cover rounded-lg">
 
                         @else
 
-                            <div class="w-20 h-20 bg-gray-700 rounded-lg flex items-center justify-center">
-                                🎮
-                            </div>
+                        <div class="w-20 h-20 bg-gray-700 rounded-lg flex items-center justify-center">
+                            🎮
+                        </div>
 
                         @endif
 
@@ -203,15 +203,15 @@
 
                         @if($game->status == 'aktif')
 
-                            <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">
-                                Aktif
-                            </span>
+                        <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">
+                            Aktif
+                        </span>
 
                         @else
 
-                            <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm">
-                                Nonaktif
-                            </span>
+                        <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm">
+                            Nonaktif
+                        </span>
 
                         @endif
 
@@ -223,18 +223,18 @@
                         <div class="flex justify-center gap-2">
 
                             <button
-    type="button"
-    data-id="{{ $game->id }}"
-    data-nama="{{ $game->nama_game }}"
-    data-kategori="{{ $game->kategori }}"
-    data-deskripsi="{{ $game->deskripsi }}"
-    data-status="{{ $game->status }}"
-    onclick="openEditModal(this)"
-    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">
+                                type="button"
+                                data-id="{{ $game->id }}"
+                                data-nama="{{ $game->nama_game }}"
+                                data-kategori="{{ $game->kategori }}"
+                                data-deskripsi="{{ $game->deskripsi }}"
+                                data-status="{{ $game->status }}"
+                                onclick="openEditModal(this)"
+                                class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">
 
-    Edit
+                                Edit
 
-</button>
+                            </button>
 
                             <form
                                 action="{{ route('admin.games.destroy',$game->id) }}"
@@ -351,8 +351,8 @@
                     name="thumbnail"
                     accept="image/*"
                     class="w-full bg-[#2b2650] text-white rounded-lg p-3">
-                    
-                
+
+
 
                 <button
                     type="submit"
@@ -371,44 +371,38 @@
 </div>
 
 <script>
+    function openEditModal(btn) {
+        document.getElementById('editModal').classList.remove('hidden');
+        document.getElementById('editModal').classList.add('flex');
 
-function openEditModal(btn)
-{
-    document.getElementById('editModal').classList.remove('hidden');
-    document.getElementById('editModal').classList.add('flex');
-
-    document.getElementById('edit_deskripsi').value =
+        document.getElementById('edit_deskripsi').value =
             btn.dataset.deskripsi;
 
-    document.getElementById('edit_nama_game').value =
-        btn.dataset.nama;
+        document.getElementById('edit_nama_game').value =
+            btn.dataset.nama;
 
-    document.getElementById('edit_kategori').value =
-        btn.dataset.kategori;
+        document.getElementById('edit_kategori').value =
+            btn.dataset.kategori;
 
-    document.getElementById('edit_status').value =
-        btn.dataset.status;
+        document.getElementById('edit_status').value =
+            btn.dataset.status;
 
-    document.getElementById('editForm').action =
-        "{{ url('/admin/games') }}/" + btn.dataset.id;
-}
-
-function closeEditModal()
-{
-    document.getElementById('editModal').classList.add('hidden');
-    document.getElementById('editModal').classList.remove('flex');
-}
-
-window.onclick = function(event)
-{
-    let modal = document.getElementById('editModal');
-
-    if(event.target === modal)
-    {
-        closeEditModal();
+        document.getElementById('editForm').action =
+            "{{ url('/admin/games') }}/" + btn.dataset.id;
     }
-}
 
+    function closeEditModal() {
+        document.getElementById('editModal').classList.add('hidden');
+        document.getElementById('editModal').classList.remove('flex');
+    }
+
+    window.onclick = function(event) {
+        let modal = document.getElementById('editModal');
+
+        if (event.target === modal) {
+            closeEditModal();
+        }
+    }
 </script>
 
 @endsection

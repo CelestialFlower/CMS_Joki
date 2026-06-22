@@ -60,6 +60,7 @@ public function update(
 
     return back();
 }
+
 public function kelolaorder(Request $request)
 {
     $query = Order::with(['user','game']);
@@ -85,5 +86,15 @@ public function kelolaorder(Request $request)
             'dibatalkan'
         )
     );
+}
+public function riwayat()
+{
+    $orders = Order::with('game')
+        ->where('user_id', auth()->id())
+        ->where('status', 'selesai')
+        ->latest()
+        ->get();
+
+    return view('user.riwayat', compact('orders'));
 }
 }

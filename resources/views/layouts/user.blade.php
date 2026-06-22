@@ -110,13 +110,28 @@
             <div class="mt-3 p-3 bg-indigo-800 rounded-lg">
 
                 <div class="font-semibold">
-                    {{ Auth::user()->name }}
+                    {{ Auth::user()->email }}
                 </div>
                 <div class="font-semibold">
                     {{ Auth::user()->role }}
                 </div>
-                </div>
+                <div class="font-semibold">
 
+            @if(Auth::user()->status == 'aktif')
+
+                <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
+                    Aktif
+                </span>
+
+            @else
+
+                <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full">
+                    Suspend
+                </span>
+
+            @endif
+
+</div>
         @endauth
 
     </div>
@@ -133,13 +148,13 @@
             🎮 Buat Order
         </a>
 
-        <a href="{{ route('user.status') }}"
+        <a href="{{ route('user.status-order') }}"
            class="block p-3 rounded-lg hover:bg-indigo-700">
             📦 Status Order
         </a>
         <a href="{{ route('user.riwayat') }}"
-           class="block p-3 rounded-lg hover:bg-indigo-700">
-            📜 Riwayat Order
+            class="block p-3 rounded-lg hover:bg-indigo-700">
+    📜 Riwayat Order
         </a>
     </nav>
 

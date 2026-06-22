@@ -20,7 +20,7 @@ use Illuminate\Http\Request;
 Route::get('/', [FrontController::class, 'home'])->name('fronted.home');
 Route::get('/game', [FrontController::class, 'game'])
     ->name('game');
-    Route::get('/game', [FrontController::class, 'game'])
+Route::get('/game', [FrontController::class, 'game'])
     ->name('fronted.game');
 Route::get('/artikel', [FrontController::class, 'artikel'])->name('fronted.artikel');
 Route::get('/tentang', [FrontController::class, 'tentang'])->name('fronted.tentang');
@@ -33,14 +33,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get(
         '/user/order',
-        [OrderController::class,'index']
+        [OrderController::class, 'index']
     )->name('user.order');
 
     Route::post(
         '/user/order',
-        [OrderController::class,'store']
+        [OrderController::class, 'store']
     )->name('user.order.store');
-
 });
 
 /*|--------------------------------------------------------------------------
@@ -69,12 +68,11 @@ Route::prefix('admin')
             '/artikel',
             [ArtikelController::class, 'store']
         )->name('artikel.store');
-
     });
-Route::put('/admin/artikel/{artikel}', [ArtikelController::class,'update'])
+Route::put('/admin/artikel/{artikel}', [ArtikelController::class, 'update'])
     ->name('admin.artikel.update');
 
-Route::delete('/admin/artikel/{artikel}', [ArtikelController::class,'destroy'])
+Route::delete('/admin/artikel/{artikel}', [ArtikelController::class, 'destroy'])
     ->name('admin.artikel.destroy');
 Route::get('/artikel/{id}', [FrontController::class, 'showArtikel'])
     ->name('fronted.artikel.show');
@@ -88,14 +86,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
 
-        if(auth()->user()->role === 'admin'){
+        if (auth()->user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
         return redirect()->route('user.dashboard');
-
     })->name('dashboard');
-
 });
 
 /*
@@ -110,10 +106,11 @@ Route::middleware('auth')->group(function () {
         '/admin/dashboard',
         'admin.dashboard'
     )->name('admin.dashboard');
-
 });
-Route::get('/admin/dashboard',
-    [FrontController::class,'dashboard'])
+Route::get(
+    '/admin/dashboard',
+    [FrontController::class, 'dashboard']
+)
     ->name('admin.dashboard');
 route::get('/admin/penjoki', [FrontController::class, 'penjoki'])->name('admin.penjoki');
 route::get('/admin/costumer', [FrontController::class, 'costumer'])->name('admin.costumer');
@@ -134,10 +131,9 @@ Route::prefix('admin')
     ->group(function () {
 
         Route::resource('games', GameController::class);
-
     });
 
-    Route::get(
+Route::get(
     '/admin/kelolagame',
     [GameController::class, 'index']
 )->name('admin.kelolagame');
@@ -147,27 +143,45 @@ Route::prefix('admin')
 | User
 |--------------------------------------------------------------------------
 */
-
+Route::get('/user/riwayat', [FrontController::class, 'riwayat'])
+    ->middleware('auth')
+    ->name('user.riwayat');
 Route::middleware('auth')->group(function () {
 
     Route::view(
         '/user/dashboard',
         'user.dashboard'
     )->name('user.dashboard');
-
 });
+Route::get('/user/dashboard', [FrontController::class, 'userDashboard'])
+    ->middleware('auth')
+    ->name('user.dashboard');
 Route::get(
     '/user/order',
     [OrderController::class, 'index']
 )->name('user.order');
-route::get('/user/riwayat', [FrontController::class, 'riwayat'])->name('user.riwayat');
-route::get('/user/status-order', [FrontController::class, 'status'])->name('user.status');  
+
+route::get('/user/status-order', [FrontController::class, 'status'])->name('user.status');
 Route::get(
     '/user/riwayat',
-    [OrderController::class,'riwayat']
+    [OrderController::class, 'riwayat']
 )->name('user.riwayat');
 
+Route::get('/user/status-order', [FrontController::class, 'statusOrder'])
+    ->middleware('auth')
+    ->name('user.status-order');
 
+Route::get('/user/order/{order}/edit', [FrontController::class, 'editUserOrder'])
+    ->middleware('auth')
+    ->name('user.order.edit');
+
+Route::put('/user/order/{order}', [FrontController::class, 'updateUserOrder'])
+    ->middleware('auth')
+    ->name('user.order.update');
+
+Route::delete('/user/order/{order}', [FrontController::class, 'destroyUserOrder'])
+    ->middleware('auth')
+    ->name('user.order.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -177,17 +191,23 @@ Route::get(
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/profile',
-        [ProfileController::class, 'edit'])
+    Route::get(
+        '/profile',
+        [ProfileController::class, 'edit']
+    )
         ->name('profile.edit');
 
-    Route::patch('/profile',
-        [ProfileController::class, 'update'])
+    Route::patch(
+        '/profile',
+        [ProfileController::class, 'update']
+    )
         ->name('profile.update');
 
-    Route::delete('/profile',
-        [ProfileController::class, 'destroy'])
+    Route::delete(
+        '/profile',
+        [ProfileController::class, 'destroy']
+    )
         ->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

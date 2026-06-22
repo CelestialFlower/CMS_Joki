@@ -1,128 +1,119 @@
 @extends('layouts.user')
-@section('content')
-<div class="container mx-auto px-6 py-8">
 
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-8">
+@section('content')
+
+<div class="max-w-6xl mx-auto">
+
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+
         <div>
-            <h1 class="text-4xl font-bold text-gray-800">
-                Riwayat Order
+            <h1 class="text-3xl font-bold text-white">
+                ✅ Riwayat Order Selesai
             </h1>
-            <p class="text-gray-500">
-                Lihat seluruh pesanan joki yang pernah dibuat.
+
+            <p class="text-gray-400 mt-2">
+                Daftar pesanan joki yang telah selesai dikerjakan.
             </p>
         </div>
 
-        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-lg">
-            + Buat Order Baru
-        </button>
-    </div>
+        <div class="flex gap-3">
+            <a href="{{ route('user.status-order') }}"
+               class="bg-[#2b2650] hover:bg-[#393266] px-5 py-3 rounded-xl text-white font-semibold transition">
+                Pesanan Aktif
+            </a>
 
-    <!-- Filter -->
-    <div class="bg-white rounded-2xl shadow-md p-5 mb-6">
-        <div class="grid md:grid-cols-3 gap-4">
-            <input
-                type="text"
-                placeholder="Cari Order ID..."
-                class="border rounded-lg px-4 py-3"
-            >
-
-            <select class="border rounded-lg px-4 py-3">
-                <option>Semua Game</option>
-                <option>Mobile Legends</option>
-                <option>Genshin Impact</option>
-                <option>Honkai Star Rail</option>
-                <option>Zenless Zone Zero</option>
-            </select>
-
-            <select class="border rounded-lg px-4 py-3">
-                <option>Semua Status</option>
-                <option>Pending</option>
-                <option>Diproses</option>
-                <option>Selesai</option>
-            </select>
+            <a href="{{ route('user.order') }}"
+               class="bg-purple-600 hover:bg-purple-700 px-5 py-3 rounded-xl text-white font-semibold transition">
+                + Buat Order
+            </a>
         </div>
+
     </div>
 
-    <!-- Table -->
-    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+    {{-- NOTIFIKASI --}}
+    @if(session('success'))
+        <div class="mb-5 bg-green-500/20 border border-green-500 text-green-300 px-5 py-4 rounded-xl">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        <table class="w-full text-gray-800">
+    <div class="bg-[#16122D] rounded-3xl overflow-hidden border border-purple-900">
 
-            <thead class="bg-indigo-600 text-white">
-                <tr>
-                    <th class="p-4 text-left">Order ID</th>
-                    <th class="p-4 text-left">Game</th>
-                    <th class="p-4 text-left">Layanan</th>
-                    <th class="p-4 text-left">Harga</th>
-                    <th class="p-4 text-left">Status</th>
-                    <th class="p-4 text-left">Tanggal</th>
-                    <th class="p-4 text-center">Aksi</th>
-                </tr>
-            </thead>
+        <div class="p-6 border-b border-purple-900">
+            <h2 class="text-xl font-bold text-white">
+                Pesanan Selesai
+            </h2>
 
-            <tbody>
+            <p class="text-sm text-gray-400 mt-1">
+                Menampilkan seluruh order dengan status selesai.
+            </p>
+        </div>
 
-                <!-- Dummy Data 1 -->
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="p-4 font-semibold">#ORD001</td>
-                    <td class="p-4">Mobile Legends</td>
-                    <td class="p-4">Rank Mythic</td>
-                    <td class="p-4">Rp150.000</td>
-                    <td class="p-4">
-                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-                            Selesai
-                        </span>
-                    </td>
-                    <td class="p-4">15 Juni 2026</td>
-                    <td class="p-4 text-center">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                            Detail
-                        </button>
-                    </td>
-                </tr>
+        <div class="overflow-x-auto">
 
-                <!-- Dummy Data 2 -->
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="p-4 font-semibold">#ORD002</td>
-                    <td class="p-4">Genshin Impact</td>
-                    <td class="p-4">Abyss Clear</td>
-                    <td class="p-4">Rp75.000</td>
-                    <td class="p-4">
-                        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
-                            Pending
-                        </span>
-                    </td>
-                    <td class="p-4">16 Juni 2026</td>
-                    <td class="p-4 text-center">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                            Detail
-                        </button>
-                    </td>
-                </tr>
+            <table class="w-full text-left text-gray-300">
 
-                <!-- Dummy Data 3 -->
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="p-4 font-semibold">#ORD003</td>
-                    <td class="p-4">Zenless Zone Zero</td>
-                    <td class="p-4">Leveling Account</td>
-                    <td class="p-4">Rp250.000</td>
-                    <td class="p-4">
-                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-                            Diproses
-                        </span>
-                    </td>
-                    <td class="p-4">16 Juni 2026</td>
-                    <td class="p-4 text-center">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                            Detail
-                        </button>
-                    </td>
-                </tr>
+                <thead class="bg-[#211B42] text-white">
+                    <tr>
+                        <th class="px-6 py-4">ID</th>
+                        <th class="px-6 py-4">Game</th>
+                        <th class="px-6 py-4">Nomor HP</th>
+                        <th class="px-6 py-4">Tanggal Order</th>
+                        <th class="px-6 py-4">Tanggal Selesai</th>
+                        <th class="px-6 py-4">Status</th>
+                    </tr>
+                </thead>
 
-            </tbody>
+                <tbody>
 
-        </table>
+                    @forelse($orders as $order)
+
+                        <tr class="border-b border-purple-900 hover:bg-[#211B42] transition">
+
+                            <td class="px-6 py-4 font-semibold text-white">
+                                #{{ $order->id }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                {{ $order->game->nama_game ?? '-' }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                {{ $order->nomor_hp }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                {{ $order->created_at ? $order->created_at->format('d M Y H:i') : '-' }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                {{ $order->updated_at ? $order->updated_at->format('d M Y H:i') : '-' }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
+                                    Selesai
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    @empty
+
+                        <tr>
+                            <td colspan="6" class="text-center py-14 text-gray-400">
+                                <div class="text-4xl mb-3">📭</div>
+                                Belum ada pesanan yang selesai.
+                            </td>
+                        </tr>
+
+                    @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 
