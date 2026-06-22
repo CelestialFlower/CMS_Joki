@@ -49,21 +49,36 @@ class FrontController extends Controller
     }
 
     public function home()
-    {
-        $games = Game::where('status', 'aktif')->get();
+{
+    $games = Game::where('status', 'aktif')->get();
 
-        $articles = Artikel::with('game')
-            ->where('status', 'publish')
-            ->latest()
-            ->take(8)
-            ->get();
+    $articles = Artikel::with('game')
+        ->where('status', 'publish')
+        ->latest()
+        ->take(8)
+        ->get();
 
-        return view('fronted.home', compact(
-            'games',
-            'articles'
-        ));
-    }
+    // Game paling sering diorder
+    $flashGames = Game::where('status', 'aktif')
+        ->withCount([
+            'orders as orders_count' => function ($query) {
+                $query->whereIn('status', [
+                    'pending',
+                    'proses',
+                    'selesai'
+                ]);
+            }
+        ])
+        ->orderByDesc('orders_count')
+        ->take(4)
+        ->get();
 
+    return view('fronted.home', compact(
+        'games',
+        'articles',
+        'flashGames'
+    ));
+}
     public function game()
     {
         $games = Game::all();

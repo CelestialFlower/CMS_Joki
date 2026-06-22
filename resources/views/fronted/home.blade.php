@@ -67,63 +67,85 @@
 
 </section>
 
-<!-- FLASH SALE -->
+<!-- Most Popular -->
 
 <section class="container mx-auto px-6">
 
     <h2 class="text-2xl font-bold mb-6">
 
-        🔥 Flash Sale
+        🔥 Most Popular
 
     </h2>
 
-    <div class="grid md:grid-cols-4 gap-5">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
-        <div class="card-bg p-5 rounded-2xl glow">
+    @forelse($flashGames as $game)
 
-            <h3 class="font-bold">
-                Joki Mythic
-            </h3>
+        <div class="card-bg p-5 rounded-2xl glow border border-purple-700/40 hover:border-purple-400 transition duration-300">
 
-            <p class="text-purple-300">
-                Mobile Legends
-            </p>
+            <div class="flex items-start justify-between gap-3">
 
-            <div class="mt-4 text-2xl font-bold text-yellow-400">
+                <div>
+                    <h3 class="font-bold text-lg text-white">
+                        {{ $game->nama_game }}
+                    </h3>
 
-                Rp 49.000
+                    <p class="text-purple-300 text-sm mt-1">
+                        Game populer
+                    </p>
+                </div>
+
+                <span class="bg-yellow-500/20 text-yellow-300 text-xs px-3 py-1 rounded-full">
+                    🔥 {{ $game->orders_count }} Order
+                </span>
 
             </div>
 
-            <button class="mt-5 bg-purple-600 w-full py-2 rounded-xl">
+                @if($game->thumbnail)
+        <img src="{{ asset('storage/' . $game->thumbnail) }}"
+            alt="{{ $game->nama_game }}"
+            class="w-full h-36 object-cover rounded-xl mt-4">
+    @else
+        <div class="w-full h-36 bg-[#2b2650] rounded-xl mt-4 flex items-center justify-center text-gray-400">
+            Thumbnail belum tersedia
+        </div>
+    @endif
 
-                Order
+            <div class="mt-4">
 
-            </button>
+                <p class="text-sm text-gray-400">
+                    Total pesanan
+                </p>
+
+                <p class="text-2xl font-bold text-yellow-400">
+                    {{ $game->orders_count }} Order
+                </p>
+
+            </div>
+
+            <a href="{{ route('user.order', ['game_id' => $game->id]) }}"
+               class="block mt-5 bg-purple-600 hover:bg-purple-700 text-center text-white py-2.5 rounded-xl font-semibold transition">
+                Pesan Joki
+            </a>
 
         </div>
 
-        <div class="card-bg p-5 rounded-2xl glow">
-            ...
+    @empty
+
+        <div class="col-span-4 text-center py-10 text-gray-400">
+            Belum ada data order game.
         </div>
 
-        <div class="card-bg p-5 rounded-2xl glow">
-            ...
-        </div>
+    @endforelse
 
-        <div class="card-bg p-5 rounded-2xl glow">
-            ...
-        </div>
-
-    </div>
-
+</div>
 </section>
 
 <!-- GAME SECTION -->
 <section class="container mx-auto px-6 py-16">
 
     <div class="flex items-center justify-between mb-8">
-        <h2 class="text-3xl font-bold">🎮 Game Populer</h2>
+        <h2 class="text-3xl font-bold">🎮 Game</h2>
         <a href="{{ route('fronted.game') }}" class="text-purple-400 hover:text-purple-300 text-sm">
             Lihat Semua &rarr;
         </a>

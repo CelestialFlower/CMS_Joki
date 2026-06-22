@@ -39,7 +39,7 @@
 
                 <div class="flex items-center gap-3">
 
-                    <div class="w-12 h-12 bg-purple-600 rounded-full"></div>
+                   <img src="https://i.pinimg.com/736x/06/fa/90/06fa907ff45ab825d353056ce6b7e95b.jpg" class="w-12 h-12 rounded-full">
 
                     <h1 class="font-bold text-xl">
                         JOKI CSstore
@@ -116,7 +116,7 @@
 
                     <h3 class="font-bold text-xl">
 
-                        JOKI PRO
+                        JOKI CSstore
 
                     </h3>
 
