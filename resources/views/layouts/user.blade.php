@@ -133,16 +133,14 @@
             🎮 Buat Order
         </a>
 
-        <a href="{{ route('user.riwayat') }}"
-           class="block p-3 rounded-lg hover:bg-indigo-700">
-            📜 Riwayat Order
-        </a>
-
         <a href="{{ route('user.status') }}"
            class="block p-3 rounded-lg hover:bg-indigo-700">
             📦 Status Order
         </a>
-
+        <a href="{{ route('user.riwayat') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            📜 Riwayat Order
+        </a>
     </nav>
 
 </aside>

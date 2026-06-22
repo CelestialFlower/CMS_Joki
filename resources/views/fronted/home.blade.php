@@ -416,14 +416,16 @@ text-center">
             </p>
 
             <button class="mt-8
-bg-yellow-400
-text-black
-font-bold
-px-8
-py-4
-rounded-xl">
+                                bg-yellow-400
+                                text-black
+                                font-bold
+                                px-8
+                                py-4
+                                rounded-xl">
 
-                Pesan Sekarang
+                <a href="{{ route('user.order') }}">
+                    Order Sekarang
+                </a>
 
             </button>
 

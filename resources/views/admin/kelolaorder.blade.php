@@ -16,58 +16,67 @@
 
     <!-- Statistik -->
     <div class="grid md:grid-cols-4 gap-4 mb-8">
-
+        <div class="bg-[#1c1736] rounded-2xl p-5 text-white shadow-lg">
+            <h3 class="text-sm">Total Order </h3>
+            <p class="text-3xl font-bold">({{ $orders->count() }})</p>
+        </div>
+        
         <div class="bg-yellow-500 rounded-2xl p-5 text-white shadow-lg">
-            <h3 class="text-sm">Pending</h3>
-            <p class="text-3xl font-bold">12</p>
+            <h3 class="text-sm">Pending </h3>
+            <p class="text-3xl font-bold">({{ $pending }})</p>
         </div>
 
         <div class="bg-blue-500 rounded-2xl p-5 text-white shadow-lg">
-            <h3 class="text-sm">Diproses</h3>
-            <p class="text-3xl font-bold">8</p>
+            <h3 class="text-sm">Diproses </h3>
+            <p class="text-3xl font-bold">({{ $proses }})</p>
         </div>
 
         <div class="bg-green-500 rounded-2xl p-5 text-white shadow-lg">
-            <h3 class="text-sm">Selesai</h3>
-            <p class="text-3xl font-bold">45</p>
+            <h3 class="text-sm">Selesai </h3>
+            <p class="text-3xl font-bold">({{ $selesai }})</p>
         </div>
 
         <div class="bg-red-500 rounded-2xl p-5 text-white shadow-lg">
-            <h3 class="text-sm">Dibatalkan</h3>
-            <p class="text-3xl font-bold">3</p>
+            <h3 class="text-sm">Dibatalkan ({{ $dibatalkan }})</h3>
+            <p class="text-3xl font-bold">({{ $dibatalkan }})</p>
         </div>
 
     </div>
 
     <!-- Filter -->
-    <div class="bg-[#1c1736] rounded-2xl p-4 mb-5">
+    <form method="GET" action="{{ route('admin.kelolaorder') }}">
+    <select
+        name="status"
+        onchange="this.form.submit()"
+        class="bg-[#2a2352] text-white px-4 py-2 rounded-xl border border-gray-600">
 
-        <div class="flex flex-wrap gap-3">
+        <option value="semua"
+            {{ request('status') == 'semua' || request('status') == '' ? 'selected' : '' }}>
+            Semua
+        </option>
 
-            <button class="px-4 py-2 bg-purple-600 text-white rounded-xl">
-                Semua
-            </button>
+        <option value="pending"
+            {{ request('status') == 'pending' ? 'selected' : '' }}>
+            Pending
+        </option>
 
-            <button class="px-4 py-2 bg-yellow-500 text-white rounded-xl">
-                Pending
-            </button>
+        <option value="proses"
+            {{ request('status') == 'proses' ? 'selected' : '' }}>
+            Diproses
+        </option>
 
-            <button class="px-4 py-2 bg-blue-500 text-white rounded-xl">
-                Diproses
-            </button>
+        <option value="selesai"
+            {{ request('status') == 'selesai' ? 'selected' : '' }}>
+            Selesai
+        </option>
 
-            <button class="px-4 py-2 bg-green-500 text-white rounded-xl">
-                Selesai
-            </button>
+        <option value="dibatalkan"
+            {{ request('status') == 'dibatalkan' ? 'selected' : '' }}>
+            Dibatalkan
+        </option>
 
-            <button class="px-4 py-2 bg-red-500 text-white rounded-xl">
-                Dibatalkan
-            </button>
-
-        </div>
-
-    </div>
-
+    </select>
+</form>
     <!-- Tabel Order -->
     <div class="bg-[#1c1736] rounded-2xl overflow-hidden shadow-lg">
 
@@ -86,11 +95,11 @@
                     <tr>
                         <th class="px-6 py-4">ID</th>
                         <th class="px-6 py-4">Pelanggan</th>
+                        <th class="px-6 py-4">Email</th>
+                        <th class="px-6 py-4">Nomor HP</th>
                         <th class="px-6 py-4">Game</th>
-                        <th class="px-6 py-4">Layanan</th>
-                        <th class="px-6 py-4">Harga</th>
+                        <th class="px-6 py-4">Tanggal Order</th>
                         <th class="px-6 py-4">Status</th>
-                        <th class="px-6 py-4">Penjoki</th>
                         <th class="px-6 py-4">Aksi</th>
                     </tr>
 
@@ -98,71 +107,124 @@
 
                 <tbody>
 
-                    <tr class="border-b border-gray-700 hover:bg-[#241d46]">
+@forelse($orders as $order)
 
-                        <td class="px-6 py-4">#001</td>
-                        <td class="px-6 py-4">Reisa</td>
-                        <td class="px-6 py-4">Genshin Impact</td>
-                        <td class="px-6 py-4">Abyss Full Star</td>
-                        <td class="px-6 py-4">Rp 150.000</td>
+<tr class="border-b border-gray-700 hover:bg-[#241d46]">
 
-                        <td class="px-6 py-4">
-                            <span class="bg-yellow-500 px-3 py-1 rounded-full text-sm text-white">
-                                Pending
-                            </span>
-                        </td>
+    <td class="px-6 py-4">
+        #{{ $order->id }}
+    </td>
 
-                        <td class="px-6 py-4">
-                            Belum Ditugaskan
-                        </td>
+    <td class="px-6 py-4">
+        {{ $order->user->name }}
+    </td>
+    <td class="px-6 py-4">
+        {{ $order->user->email }}
+    </td>
+    <td class="px-6 py-4">
+        {{ $order->nomor_hp }}
+    </td>
 
-                        <td class="px-6 py-4 flex gap-2">
+    <td class="px-6 py-4">
+        {{ $order->game->nama_game }}
+    </td>
 
-                            <button class="bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-lg text-white">
-                                Detail
-                            </button>
 
-                            <button class="bg-green-600 hover:bg-green-700 px-3 py-2 rounded-lg text-white">
-                                Ubah Status
-                            </button>
+    <td class="px-6 py-4">
+        {{ $order->created_at->format('d M Y') }}
+    </td>
 
-                        </td>
+    
+    <td class="px-6 py-4">
 
-                    </tr>
+        @if($order->status == 'pending')
 
-                    <tr class="hover:bg-[#241d46]">
+            <span class="bg-yellow-500 px-3 py-1 rounded-full text-sm text-white">
+                Pending
+            </span>
 
-                        <td class="px-6 py-4">#002</td>
-                        <td class="px-6 py-4">Akbar</td>
-                        <td class="px-6 py-4">Wuthering Waves</td>
-                        <td class="px-6 py-4">Tower Clear</td>
-                        <td class="px-6 py-4">Rp 100.000</td>
+        @elseif($order->status == 'proses')
 
-                        <td class="px-6 py-4">
-                            <span class="bg-blue-500 px-3 py-1 rounded-full text-sm text-white">
-                                Diproses
-                            </span>
-                        </td>
+            <span class="bg-blue-500 px-3 py-1 rounded-full text-sm text-white">
+                Diproses
+            </span>
 
-                        <td class="px-6 py-4">
-                            Rizky
-                        </td>
+        @elseif($order->status == 'selesai')
 
-                        <td class="px-6 py-4 flex gap-2">
+            <span class="bg-green-500 px-3 py-1 rounded-full text-sm text-white">
+                Selesai
+            </span>
 
-                            <button class="bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-lg text-white">
-                                Detail
-                            </button>
+        @else
 
-                            <button class="bg-green-600 hover:bg-green-700 px-3 py-2 rounded-lg text-white">
-                                Ubah Status
-                            </button>
+            <span class="bg-red-500 px-3 py-1 rounded-full text-sm text-white">
+                Dibatalkan
+            </span>
 
-                        </td>
+        @endif
 
-                    </tr>
+    </td>
 
-                </tbody>
+
+    <td class="px-6 py-4">
+
+                        <form action="{{ route('admin.order.update',$order->id) }}"
+                    method="POST">
+
+                    @csrf
+                    @method('PUT')
+
+                    <select name="status"
+                            class="bg-[#2a2352] text-white rounded-lg p-2">
+
+                        <option value="pending"
+                            {{ $order->status=='pending' ? 'selected' : '' }}>
+                            Pending
+                        </option>
+
+                        <option value="proses"
+                            {{ $order->status=='proses' ? 'selected' : '' }}>
+                            Diproses
+                        </option>
+
+                        <option value="selesai"
+                            {{ $order->status=='selesai' ? 'selected' : '' }}>
+                            Selesai
+                        </option>
+
+                        <option value="dibatalkan"
+                            {{ $order->status=='dibatalkan' ? 'selected' : '' }}>
+                            Dibatalkan
+                        </option>
+
+                    </select>
+
+                    <button class="bg-green-600 px-3 py-2 rounded-lg mt-2">
+                        Simpan
+                    </button>
+
+                </form>
+
+    </td>
+
+</tr>
+
+@empty
+
+<tr>
+
+    <td colspan="8"
+        class="text-center py-8 text-gray-400">
+
+        Belum ada order
+
+    </td>
+
+</tr>
+
+@endforelse
+
+</tbody>
 
             </table>
 

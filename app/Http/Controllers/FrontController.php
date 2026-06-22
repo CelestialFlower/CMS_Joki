@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Game;    
 use App\Models\Artikel;
+use App\Models\User;
+use App\Models\Order;
 class FrontController extends Controller
 {
     /**
@@ -15,7 +17,34 @@ class FrontController extends Controller
         return view('layouts.front');
     }
     
+public function dashboard()
+{
+    $totalOrder = Order::count();
+    $orderPending = Order::where('status','pending')->count();
+    $orderDiproses = Order::where('status','proses')->count();
+    $orderSelesai = Order::where('status','selesai')->count();
 
+    $totalPelanggan = User::where('role','user')->count();
+
+    $totalGame = Game::count();
+    $totalArtikel = Artikel::count();
+
+    $orderTerbaru = Order::with(['user','game'])
+                        ->latest()
+                        ->take(5)
+                        ->get();
+
+    return view('admin.dashboard', compact(
+        'totalOrder',
+        'orderPending',
+        'orderDiproses',
+        'orderSelesai',
+        'totalPelanggan',
+        'totalGame',
+        'totalArtikel',
+        'orderTerbaru'
+    ));
+}
 
 public function home()
 {
@@ -79,9 +108,37 @@ public function artikel()
         return view('admin.penjoki');
     }
     public function costumer()
-    {
-        return view('admin.costumer');
-    }
+{
+    $pelanggan = User::where('role', 'user')
+        ->withCount('orders')
+        ->get();
+
+    $totalPelanggan = User::where('role', 'user')->count();
+
+    $aktif = User::where('role', 'user')
+        ->where('status', 'aktif')
+        ->count();
+
+    $suspend = User::where('role', 'user')
+        ->where('status', 'suspend')
+        ->count();
+
+    $orderHariIni = Order::whereDate(
+        'created_at',
+        today()
+    )->count();
+
+    return view(
+        'admin.costumer',
+        compact(
+            'pelanggan',
+            'totalPelanggan',
+            'aktif',
+            'suspend',
+            'orderHariIni'
+        )
+    );
+}
     public function riwayat()
     {
         return view('user.riwayat');
@@ -98,11 +155,9 @@ public function artikel()
     {
         return view('user.order');
     }
-    public function kelolaorder()
-    {
-        return view('admin.kelolaorder');
-    }
-   public function showGame($id)
+
+   
+    public function showGame($id)
 {
     $game = Game::findOrFail($id);
 
@@ -116,34 +171,126 @@ public function artikel()
         compact('game', 'artikels')
     );
 }
+    public function showOrders()
+{
+    $orders = Order::with([
+        'user',
+        'game'
+    ])->latest()->get();
+
+    return view(
+        'admin.orders',
+        compact('orders')
+    );
+}
+public function updatestatus(
+    Request $request,
+    Order $order
+)
+{
+    $order->update([
+        'status' => $request->status
+    ]);
+
+    return back();
+}
 public function showArtikel($id)
 {
     $artikel = Artikel::with('game')->findOrFail($id);
 
     return view('fronted.artikel-detail', compact('artikel'));
 }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+   
+
+
+public function kelolaorder(Request $request)
+{
+    $status = $request->status;
+
+    $query = Order::with(['user','game']);
+
+    if ($status && $status != 'semua') {
+        $query->where('status', $status);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    $orders = $query->latest()->get();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-    
+    $pending = Order::where('status', 'pending')->count();
+    $proses = Order::where('status', 'proses')->count();
+    $selesai = Order::where('status', 'selesai')->count();
+    $dibatalkan = Order::where('status', 'dibatalkan')->count();
+
+    return view(
+        'admin.kelolaorder',
+        compact(
+            'orders',
+            'pending',
+            'proses',
+            'selesai',
+            'dibatalkan'
+        )
+    );
+}
+
+public function pelanggan()
+{
+    $pelanggan = User::where('role', 'user')
+        ->withCount('orders')
+        ->withCount([
+            'orders as pending_count' => function($q){
+                $q->where('status', 'pending');
+            },
+
+            'orders as proses_count' => function($q){
+                $q->where('status', 'proses');
+            },
+
+            'orders as selesai_count' => function($q){
+                $q->where('status', 'selesai');
+            }
+        ])
+        ->get();
+
+    $totalPelanggan = $pelanggan->count();
+
+    $aktif = User::where('role','user')
+        ->where('status','aktif')
+        ->count();
+
+    $suspend = User::where('role','user')
+        ->where('status','suspend')
+        ->count();
+
+    return view(
+        'admin.kelola-pelanggan',
+        compact(
+            'pelanggan',
+            'totalPelanggan',
+            'aktif',
+            'suspend'
+        )
+    );
+}
+public function ubahStatus(Request $request, User $user)
+{
+    $user->update([
+        'status' => $request->status
+    ]);
+
+    return back()
+        ->with('success', 'Status pelanggan berhasil diperbarui');
+}
+    public function updateOrder(Request $request, Order $order)
+{
+    $request->validate([
+        'status' => 'required'
+    ]);
+
+    $order->update([
+        'status' => $request->status
+    ]);
+
+    return back()
+        ->with('success', 'Status order berhasil diperbarui');
+}
 }

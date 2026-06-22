@@ -131,6 +131,10 @@
            class="block p-3 rounded-lg hover:bg-indigo-700">
             🧑‍💼 kelola Pelanggan
         </a>
+        <a href="{{ route('admin.kelolaorder') }}"
+           class="block p-3 rounded-lg hover:bg-indigo-700">
+            📦 kelola Order
+        </a>
 
         <a href="{{ route('admin.kelolaartikel') }}"
            class="block p-3 rounded-lg hover:bg-indigo-700">
@@ -140,11 +144,7 @@
            class="block p-3 rounded-lg hover:bg-indigo-700">
             🎮 kelola Game
         </a>
-        <a href="{{ route('admin.kelolaorder') }}"
-           class="block p-3 rounded-lg hover:bg-indigo-700">
-            📦 kelola Order
-        </a>
-
+        
     </nav>
 
 </aside>

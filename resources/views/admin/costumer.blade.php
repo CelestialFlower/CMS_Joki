@@ -5,81 +5,52 @@
 
 <div class="space-y-6">
 
-    <!-- HEADER -->
-    <div class="flex justify-between items-center">
+    {{-- HEADER --}}
 
-        <div>
-            <h1 class="text-3xl font-bold text-white">
-                👥 Kelola Pelanggan
-            </h1>
-
-            <p class="text-gray-400 mt-1">
-                Kelola seluruh data pelanggan JOKI CSstore.
-            </p>
+    {{-- ALERT --}}
+    @if(session('success'))
+        <div class="bg-green-500/20 border border-green-500 text-green-400 px-5 py-3 rounded-xl">
+            {{ session('success') }}
         </div>
+    @endif
 
-        <button
-            class="bg-purple-600 hover:bg-purple-700 px-5 py-3 rounded-xl text-white font-semibold transition">
-            + Tambah Pelanggan
-        </button>
-
-    </div>
-
-    <!-- STATISTIK -->
+    {{-- STATISTIK --}}
     <div class="grid md:grid-cols-4 gap-6">
 
-        <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Total Pelanggan</p>
-            <h2 class="text-3xl font-bold text-white mt-2">120</h2>
-        </div>
-
-        <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Aktif</p>
-            <h2 class="text-3xl font-bold text-green-400 mt-2">105</h2>
-        </div>
-
-        <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Suspend</p>
-            <h2 class="text-3xl font-bold text-red-400 mt-2">5</h2>
-        </div>
-
-        <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
-            <p class="text-gray-400">Order Hari Ini</p>
-            <h2 class="text-3xl font-bold text-yellow-400 mt-2">18</h2>
-        </div>
-
+    <!-- Total Pelanggan -->
+    <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
+        <p class="text-gray-400">Total Pelanggan</p>
+        <h2 class="text-3xl font-bold text-white mt-2">
+            {{ $totalPelanggan }}
+        </h2>
     </div>
 
-    <!-- FILTER -->
-    <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-5">
-
-        <div class="grid md:grid-cols-4 gap-4">
-
-            <input
-                type="text"
-                placeholder="Cari nama pelanggan..."
-                class="bg-[#2b2650] border border-purple-700 rounded-xl px-4 py-3 text-white">
-
-            <input
-                type="text"
-                placeholder="Cari email..."
-                class="bg-[#2b2650] border border-purple-700 rounded-xl px-4 py-3 text-white">
-
-            <select
-                class="bg-[#2b2650] border border-purple-700 rounded-xl px-4 py-3 text-white">
-                <option>Semua Status</option>
-                <option>Aktif</option>
-                <option>Suspend</option>
-            </select>
-
-            <button
-                class="bg-purple-600 hover:bg-purple-700 rounded-xl text-white font-semibold">
-                Cari
-            </button>
-
-        </div>
-
+    <!-- Aktif -->
+    <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
+        <p class="text-gray-400">Aktif</p>
+        <h2 class="text-3xl font-bold text-green-400 mt-2">
+            {{ $aktif }}
+        </h2>
     </div>
+
+    <!-- Suspend -->
+    <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
+        <p class="text-gray-400">Suspend</p>
+        <h2 class="text-3xl font-bold text-red-400 mt-2">
+            {{ $suspend }}
+        </h2>
+    </div>
+
+    <!-- Order Hari Ini -->
+    <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
+        <p class="text-gray-400">Order Hari Ini</p>
+        <h2 class="text-3xl font-bold text-yellow-400 mt-2">
+            {{ $orderHariIni }}
+        </h2>
+    </div>
+
+</div>
+
 
     <!-- TABLE -->
     <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl overflow-hidden">
@@ -102,83 +73,100 @@
 
             <tbody class="text-white">
 
-                <tr class="border-b border-purple-900">
+               
 
-                    <td class="p-4">1</td>
-                    <td class="p-4 font-semibold">Reisa Irawan</td>
-                    <td class="p-4">reisa@gmail.com</td>
-                    <td class="p-4">081234567890</td>
-                    <td class="p-4">15</td>
+                @forelse($pelanggan as $user)
 
-                    <td class="p-4">
-                        <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
-                            Aktif
-                        </span>
-                    </td>
+<tr class="border-b border-purple-900">
 
-                    <td class="p-4">
+    <td class="p-4">
+        {{ $user->id }}
+    </td>
 
-                        <div class="flex justify-center gap-2">
+    <td class="p-4 font-semibold">
+        {{ $user->name }}
+    </td>
 
-                            <button
-                                class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm">
-                                Detail
-                            </button>
+    <td class="p-4">
+        {{ $user->email }}
+    </td>
 
-                            <button
-                                class="bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm">
-                                Edit
-                            </button>
+    <td class="p-4">
+        -
+    </td>
 
-                            <button
-                                class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-sm">
-                                Suspend
-                            </button>
+    <td class="p-4">
+        {{ $user->orders_count }}
+    </td>
 
-                        </div>
+    <td class="p-4">
 
-                    </td>
+        @if($user->status == 'aktif')
 
-                </tr>
+            <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
+                Aktif
+            </span>
 
-                <tr class="border-b border-purple-900">
+        @else
 
-                    <td class="p-4">2</td>
-                    <td class="p-4 font-semibold">Budi Santoso</td>
-                    <td class="p-4">budi@gmail.com</td>
-                    <td class="p-4">089876543210</td>
-                    <td class="p-4">7</td>
+            <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full">
+                Suspend
+            </span>
 
-                    <td class="p-4">
-                        <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full">
-                            Suspend
-                        </span>
-                    </td>
+        @endif
 
-                    <td class="p-4">
+    </td>
 
-                        <div class="flex justify-center gap-2">
+    <td class="p-4">
 
-                            <button
-                                class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm">
-                                Detail
-                            </button>
+        <div class="flex justify-center gap-2">
 
-                            <button
-                                class="bg-yellow-600 hover:bg-yellow-700 px-3 py-2 rounded-lg text-sm">
-                                Edit
-                            </button>
 
-                            <button
-                                class="bg-green-600 hover:bg-green-700 px-3 py-2 rounded-lg text-sm">
-                                Aktifkan
-                            </button>
+           <form
+    action="{{ route('admin.costumer.status',$user->id) }}"
+    method="POST">
 
-                        </div>
+    @csrf
+    @method('PUT')
 
-                    </td>
+    <input
+        type="hidden"
+        name="status"
+        value="{{ $user->status == 'aktif' ? 'suspend' : 'aktif' }}">
 
-                </tr>
+    <button
+        class="px-3 py-2 rounded-lg text-sm
+        {{ $user->status == 'aktif'
+            ? 'bg-red-600 hover:bg-red-700'
+            : 'bg-green-600 hover:bg-green-700' }}">
+
+        {{ $user->status == 'aktif'
+            ? 'Suspend'
+            : 'Aktifkan' }}
+
+    </button>
+
+</form>
+        </div>
+
+    </td>
+
+</tr>
+
+@empty
+
+<tr>
+
+    <td colspan="7"
+        class="text-center py-8 text-gray-400">
+
+        Belum ada pelanggan
+
+    </td>
+
+</tr>
+
+@endforelse
 
             </tbody>
 

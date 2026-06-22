@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -19,11 +20,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+    'name',
+    'email',
+    'password',
+    'role',
+    'status',
     ];
-
+        public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -33,7 +39,20 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+public function history()
+{
+    $orders = auth()
+        ->user()
+        ->orders()
+        ->with('game')
+        ->latest()
+        ->get();
 
+    return view(
+        'user.history',
+        compact('orders')
+    );
+}
     /**
      * Get the attributes that should be cast.
      *
@@ -46,4 +65,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
 }
