@@ -70,6 +70,7 @@
     </a>
 </button>
 @endguest
+
 @auth
 @if(Auth::user()->role == 'admin')
 <button class="px-4 py-2 bg-purple-600 rounded-lg">
@@ -157,7 +158,7 @@
                     <ul class="space-y-3 mt-4">
 
                         <li>FAQ</li>
-                        <li>Kontak</li>
+                        <li><a href="{{ route('fronted.kontak') }}">Kontak</a></li>
 
                     </ul>
 

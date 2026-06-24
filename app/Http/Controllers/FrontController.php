@@ -50,12 +50,14 @@ class FrontController extends Controller
 
     public function home()
 {
-    $games = Game::where('status', 'aktif')->get();
+    $games = Game::where('status', 'aktif')
+        ->take(6)        
+        ->get();
 
     $articles = Artikel::with('game')
         ->where('status', 'publish')
         ->latest()
-        ->take(8)
+        ->take(4)
         ->get();
 
     // Game paling sering diorder

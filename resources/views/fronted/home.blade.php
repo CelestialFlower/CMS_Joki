@@ -99,7 +99,7 @@
                     🔥 {{ $game->orders_count }} Order
                 </span>
 
-            </div>
+            </div> 
 
                 @if($game->thumbnail)
         <img src="{{ asset('storage/' . $game->thumbnail) }}"
@@ -127,6 +127,8 @@
                class="block mt-5 bg-purple-600 hover:bg-purple-700 text-center text-white py-2.5 rounded-xl font-semibold transition">
                 Pesan Joki
             </a>
+
+
 
         </div>
 
@@ -335,7 +337,7 @@
 
             <p class="mt-4">
 
-                Pilih Paket
+                Order
 
             </p>
 
@@ -351,7 +353,7 @@
 
             <p class="mt-4">
 
-                Bayar
+                Tunggu info dari admin
 
             </p>
 

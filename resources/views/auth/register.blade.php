@@ -1,52 +1,140 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+<div class="min-h-screen flex items-center justify-center px-4">
+
+    <div class="w-full max-w-xl bg-[#1f1b3a] border border-purple-800 rounded-3xl shadow-2xl p-10">
+
+        <!-- Header -->
+        <div class="text-center mb-10">
+
+            <h1 class="text-4xl font-bold text-white">
+                🎮 Daftar Akun
+            </h1>
+
+            <p class="text-gray-400 mt-3">
+                Buat akun untuk mulai melakukan pemesanan joki.
+            </p>
+
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <!-- Nama -->
+            <div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+                <x-input-label
+                    for="name"
+                    class="text-white"
+                    :value="__('Nama')" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                <x-text-input
+                    id="name"
+                    class="block mt-3 w-full h-14 px-5 bg-[#2b2650] border-purple-700 text-white text-base rounded-2xl focus:border-purple-500"
+                    type="text"
+                    name="name"
+                    :value="old('name')"
+                    required
+                    autofocus
+                    autocomplete="name" />
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-input-error
+                    :messages="$errors->get('name')"
+                    class="mt-2 text-red-400" />
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+            </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+            <!-- Email -->
+            <div class="mt-6">
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+                <x-input-label
+                    for="email"
+                    class="text-white"
+                    :value="__('Email')" />
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+                <x-text-input
+                    id="email"
+                    class="block mt-3 w-full h-14 px-5 bg-[#2b2650] border-purple-700 text-white text-base rounded-2xl focus:border-purple-500"
+                    type="email"
+                    name="email"
+                    :value="old('email')"
+                    required
+                    autocomplete="username" />
+
+                <x-input-error
+                    :messages="$errors->get('email')"
+                    class="mt-2 text-red-400" />
+
+            </div>
+
+            <!-- Password -->
+            <div class="mt-6">
+
+                <x-input-label
+                    for="password"
+                    class="text-white"
+                    :value="__('Password')" />
+
+                <x-text-input
+                    id="password"
+                    class="block mt-3 w-full h-14 px-5 bg-[#2b2650] border-purple-700 text-white text-base rounded-2xl focus:border-purple-500"
+                    type="password"
+                    name="password"
+                    required
+                    autocomplete="new-password" />
+
+                <x-input-error
+                    :messages="$errors->get('password')"
+                    class="mt-2 text-red-400" />
+
+            </div>
+
+            <!-- Konfirmasi Password -->
+            <div class="mt-6">
+
+                <x-input-label
+                    for="password_confirmation"
+                    class="text-white"
+                    :value="__('Konfirmasi Password')" />
+
+                <x-text-input
+                    id="password_confirmation"
+                    class="block mt-3 w-full h-14 px-5 bg-[#2b2650] border-purple-700 text-white text-base rounded-2xl focus:border-purple-500"
+                    type="password"
+                    name="password_confirmation"
+                    required
+                    autocomplete="new-password" />
+
+                <x-input-error
+                    :messages="$errors->get('password_confirmation')"
+                    class="mt-2 text-red-400" />
+
+            </div>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-between mt-10">
+
+                <a
+                    href="{{ route('login') }}"
+                    class="text-sm text-purple-400 hover:text-purple-300">
+
+                    Sudah punya akun?
+
+                </a>
+
+                <x-primary-button
+                    class="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-2xl text-base">
+
+                    {{ __('Daftar') }}
+
+                </x-primary-button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 </x-guest-layout>
