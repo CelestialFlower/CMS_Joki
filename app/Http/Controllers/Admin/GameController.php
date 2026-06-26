@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Game;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -22,9 +23,9 @@ class GameController extends Controller
 
     
     public function create()
-    {
-        //
-    }
+{
+    return view('Admin.editGame.editGame');
+}
 
     
     public function store(Request $request)
@@ -47,8 +48,8 @@ class GameController extends Controller
     }
 
     Game::create([
-        'nama_game' => $request->nama_game,
-        'kategori' => $request->kategori,
+        'nama_game' => Str::title($request->nama_game),
+    'kategori' => Str::title($request->kategori),
         'deskripsi' => $request->deskripsi,
         'status' => $request->status,
         'thumbnail' => $thumbnailPath,

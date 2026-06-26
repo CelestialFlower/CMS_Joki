@@ -1,82 +1,50 @@
 @extends('layouts.admin')
 
 @section('content')
+<div class="space-y-6">
+
+    
+
+    <!-- HEADER -->
+    <div class="flex items-center justify-between">
+    
+<div>
+        <h1 class="text-3xl font-bold text-white">
+            Kelola Aritikel
+        </h1>
+
+        <p class="text-gray-400 mt-2">
+            Tambah, edit, dan kelola Artikel Anda
+        </p>
+    </div>
+
+    <a href="{{ route('admin.artikel.create') }}"
+   class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-3 rounded-lg">
+    + Tambah Artikel
+    </a>
+
+</div>
+{{-- ALERT SUCCESS --}}
+@if(session('success'))
+<div class="bg-green-500/20 border border-green-500 text-green-300 p-4 rounded-xl mb-4">
+    {{ session('success') }}
+</div>
+@endif
+
+{{-- ALERT ERROR --}}
+@if($errors->any())
+<div class="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-xl mb-4">
+    <p class="font-semibold mb-2">Gagal menyimpan artikel!</p>
+    <ul class="list-disc ml-5">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
 <div class="space-y-6">
 
-    <form
-        action="{{ route('admin.artikel.store') }}"
-        method="POST"
-        enctype="multipart/form-data">
-
-        @csrf
-
-        <div class="grid md:grid-cols-2 gap-4">
-
-            <!-- PILIH GAME -->
-            <select
-                name="game_id"
-                required
-                class="bg-[#2b2650] text-white p-3 rounded-lg">
-
-                <option value="">
-                    Pilih Game
-                </option>
-
-                @foreach($games as $game)
-
-                <option value="{{ $game->id }}">
-                    {{ $game->nama_game }}
-                </option>
-
-                @endforeach
-
-            </select>
-
-            <!-- JUDUL -->
-            <input
-                type="text"
-                name="judul"
-                placeholder="Judul Artikel"
-                required
-                class="bg-[#2b2650] text-white p-3 rounded-lg">
-
-        </div>
-
-        <textarea
-            name="isi"
-            rows="8"
-            placeholder="Isi Artikel..."
-            required
-            class="w-full mt-4 bg-[#2b2650] text-white p-3 rounded-lg"></textarea>
-
-        <input
-            type="file"
-            name="thumbnail"
-            class="mt-4 text-white">
-
-        <select
-            name="status"
-            class="mt-4 bg-[#2b2650] text-white p-3 rounded-lg">
-
-            <option value="publish">
-                Publish
-            </option>
-
-            <option value="draft">
-                Draft
-            </option>
-
-        </select>
-
-        <button
-            class="mt-4 bg-purple-600 px-5 py-3 rounded-lg text-white">
-
-            Simpan Artikel
-
-        </button>
-
-    </form>
     <table class="w-full text-white">
 
         <thead class="bg-[#2b2650] rounded-2xl overflow-hidden border border-purple-800">
@@ -181,6 +149,7 @@
 
 
             </tr>
+            
 
             @empty
 

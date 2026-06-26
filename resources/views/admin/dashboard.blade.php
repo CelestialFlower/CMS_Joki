@@ -8,16 +8,13 @@
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
 
         <div>
-            <p class="text-purple-400 font-semibold text-sm tracking-wider">
-                ADMIN PANEL
-            </p>
 
             <h1 class="text-3xl md:text-4xl font-bold text-white mt-1">
                 Dashboard Admin 👋
             </h1>
 
             <p class="text-gray-400 mt-2">
-                Selamat datang, {{ auth()->user()->name }}. Pantau aktivitas JOKI CSStore dari satu halaman.
+                Selamat datang, {{ auth()->user()->name }}. Pantau aktivitas JOKI CSstore dari satu halaman.
             </p>
         </div>
 
@@ -36,10 +33,30 @@
         </div>
 
     </div>
+    {{-- GRAFIK ORDER 7 HARI TERAKHIR --}}
+        <div class="mt-8 bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6">
+
+            <div class="flex items-center justify-between mb-5">
+                <div>
+                    <h2 class="text-xl font-bold text-white">
+                        📈 Grafik Total Pemesanan
+                    </h2>
+
+                    <p class="text-gray-400 text-sm">
+                        Total order selama 7 hari terakhir
+                    </p>
+                </div>
+            </div>
+
+            <canvas id="orderChart" height="100"></canvas>
+
+        </div>
+
 
     {{-- RINGKASAN ORDER --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
 
+                
         {{-- Total Order --}}
         <div class="bg-[#1f1b3a] border border-purple-800 rounded-2xl p-6 hover:border-purple-500 transition">
 
@@ -244,7 +261,7 @@
                 Lihat Semua →
             </a>
 
-        </div>
+        </div> 
 
         <div class="overflow-x-auto">
 
@@ -260,7 +277,7 @@
                         <th class="px-6 py-4">Status</th>
                         <th class="px-6 py-4 text-center">Aksi</th>
                     </tr>
-
+<!--  -->
                 </thead>
 
                 <tbody>
@@ -359,3 +376,28 @@
 </div>
 
 @endsection
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('orderChart');
+
+if (ctx) {
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: @json($chartLabels),
+            datasets: [{
+                label: 'Total Order',
+                data: @json($chartData),
+                borderColor: '#8b5cf6',
+                backgroundColor: 'rgba(139,92,246,0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        }
+    });
+}
+</script>
+@endpush

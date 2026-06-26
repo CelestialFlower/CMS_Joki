@@ -7,10 +7,14 @@ use App\Models\Game;
 use App\Models\Artikel;
 use App\Models\User;
 use App\Models\Order;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
 {
+
+    
     /**
      * Display a listing of the resource.
      */
@@ -19,34 +23,47 @@ class FrontController extends Controller
         return view('layouts.front');
     }
 
-    public function dashboard()
-    {
-        $totalOrder = Order::count();
-        $orderPending = Order::where('status', 'pending')->count();
-        $orderDiproses = Order::where('status', 'proses')->count();
-        $orderSelesai = Order::where('status', 'selesai')->count();
+   public function dashboard()
+{
+    $totalOrder = Order::count();
+    $orderPending = Order::where('status', 'pending')->count();
+    $orderDiproses = Order::where('status', 'proses')->count();
+    $orderSelesai = Order::where('status', 'selesai')->count();
 
-        $totalPelanggan = User::where('role', 'user')->count();
+    $totalPelanggan = User::where('role', 'user')->count();
 
-        $totalGame = Game::count();
-        $totalArtikel = Artikel::count();
+    $totalGame = Game::count();
+    $totalArtikel = Artikel::count();
 
-        $orderTerbaru = Order::with(['user', 'game'])
-            ->latest()
-            ->take(5)
-            ->get();
+    $orderTerbaru = Order::with(['user', 'game'])
+        ->latest()
+        ->take(5)
+        ->get();
 
-        return view('admin.dashboard', compact(
-            'totalOrder',
-            'orderPending',
-            'orderDiproses',
-            'orderSelesai',
-            'totalPelanggan',
-            'totalGame',
-            'totalArtikel',
-            'orderTerbaru'
-        ));
+    $chartLabels = [];
+    $chartData = [];
+
+    for ($i = 6; $i >= 0; $i--) {
+        $date = Carbon::now()->subDays($i);
+
+        $chartLabels[] = $date->format('d M');
+
+        $chartData[] = Order::whereDate('created_at', $date)->count();
     }
+
+    return view('admin.dashboard', compact(
+        'totalOrder',
+        'orderPending',
+        'orderDiproses',
+        'orderSelesai',
+        'totalPelanggan',
+        'totalGame',
+        'totalArtikel',
+        'orderTerbaru',
+        'chartLabels',
+        'chartData'
+    ));
+}
 
     public function home()
 {
@@ -201,15 +218,11 @@ class FrontController extends Controller
     }
     public function showOrders()
     {
-        $orders = Order::with([
-            'user',
-            'game'
-        ])->latest()->get();
+        $orders = Order::with(['user', 'game'])
+            ->latest()
+            ->paginate(10);
 
-        return view(
-            'admin.orders',
-            compact('orders')
-        );
+        return view('admin.kelolaorder', compact('orders'));
     }
      public function updatestatus(
         Request $request,
@@ -437,5 +450,6 @@ public function userDashboard()
         'selesai',
         'ordersTerbaru'
     ));
+
 }
 }

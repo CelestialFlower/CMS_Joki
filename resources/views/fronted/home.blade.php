@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
 @extends('layouts.front')
 @section('content')
 <!-- HERO -->
@@ -19,7 +22,7 @@
 
                 <p class="mt-6 text-lg text-gray-200">
 
-                    Push Rank, Farming,
+                    Eksplore Map, Farming,
                     Quest, Achievement,
                     hingga Endgame Service.
 
@@ -87,7 +90,7 @@
 
                 <div>
                     <h3 class="font-bold text-lg text-white">
-                        {{ $game->nama_game }}
+                        {{ Str::limit($game->nama_game, 15) }}
                     </h3>
 
                     <p class="text-purple-300 text-sm mt-1">

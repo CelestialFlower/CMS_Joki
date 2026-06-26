@@ -77,7 +77,7 @@
         </select>
     </form>
     <!-- Tabel Order -->
-    <div class="bg-[#1c1736] rounded-2xl overflow-hidden shadow-lg">
+<div class="bg-[#1c1736] rounded-2xl overflow-hidden shadow-lg">
 
         <div class="p-5 border-b border-gray-700">
             <h2 class="text-xl font-semibold text-white">
@@ -154,7 +154,7 @@
                                 Selesai
                             </span>
 
-                            @elseif($order->status == 'dibatalkan')
+                            @else
 
                             <span class="bg-red-500 px-3 py-1 rounded-full text-sm text-white">
                                 Dibatalkan
@@ -226,7 +226,6 @@
                 </tbody>
 
             </table>
-
         </div>
 
     </div>

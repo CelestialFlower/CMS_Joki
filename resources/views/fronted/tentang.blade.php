@@ -34,7 +34,7 @@
             </h2>
 
             <p class="text-gray-400 leading-8">
-                JokiPro hadir untuk membantu para gamer yang memiliki
+                CSstore hadir untuk membantu para gamer yang memiliki
                 keterbatasan waktu namun tetap ingin menikmati progress
                 terbaik dalam game favorit mereka.
             </p>

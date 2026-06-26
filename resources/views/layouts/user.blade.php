@@ -19,9 +19,9 @@
 
                     <img src="https://i.pinimg.com/736x/06/fa/90/06fa907ff45ab825d353056ce6b7e95b.jpg" class="w-12 h-12 rounded-full">
 
-                    <h1 class="font-bold text-xl">
-                        JOKI CSstore
-                    </h1>
+                    <img src="{{ asset('image/text.gif') }}"
+                            alt="CSstore"
+                            class="h-10 w-auto">
 
                 </div>
 
@@ -91,85 +91,82 @@
 
     <!-- NAVBAR -->
 
+<!-- side Bar -->
+ <div class="flex h-screen overflow-hidden">
 
-
-    <div class="flex">
-
-        <!-- SIDEBAR -->
-
+    {{-- Sidebar --}}
+    <aside class="w-64 bg-[#15122d] flex-shrink-0">
         <aside class="w-64 min-h-screen bg-[#17132f] text-white p-6 border-r border-purple-800">    
 
-    <div class="mb-8">
+                <div class="mb-8">
 
-        <h2 class="text-xl font-bold">
-            USER PANEL
-        </h2>
+                    <h2 class="text-xl font-bold">
+                        USER PANEL
+                    </h2>
 
-        @auth
+                    @auth
 
-            <div class="mt-3 p-3 bg-indigo-800 rounded-lg">
+                        <div class="mt-3 p-3 bg-indigo-800 rounded-lg">
 
-                <div class="font-semibold">
-                    {{ Auth::user()->email }}
+                            <div class="font-semibold">
+                                {{ Auth::user()->email }}
+                            </div>
+                            <div class="font-semibold">
+                                {{ Auth::user()->role }}
+                            </div>
+                            <div class="font-semibold">
+
+                        @if(Auth::user()->status == 'aktif')
+
+                            <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
+                                Aktif
+                            </span>
+
+                        @else
+
+                            <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full">
+                                Suspend
+                            </span>
+
+                        @endif
+
+                         </div>
+                    @endauth
+
                 </div>
-                <div class="font-semibold">
-                    {{ Auth::user()->role }}
-                </div>
-                <div class="font-semibold">
 
-            @if(Auth::user()->status == 'aktif')
+                <nav class="space-y-3">
 
-                <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
-                    Aktif
-                </span>
+                    <a href="{{ route('user.dashboard') }}"
+                    class="block p-3 rounded-lg hover:bg-indigo-700">
+                        🏠 Dashboard
+                    </a>
 
-            @else
+                    <a href="{{ route('user.order') }}"
+                    class="block p-3 rounded-lg hover:bg-indigo-700">
+                        🎮 Buat Order
+                    </a>
 
-                <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full">
-                    Suspend
-                </span>
+                    <a href="{{ route('user.status-order') }}"
+                    class="block p-3 rounded-lg hover:bg-indigo-700">
+                        📦 Status Order
+                    </a>
+                    <a href="{{ route('user.riwayat') }}"
+                        class="block p-3 rounded-lg hover:bg-indigo-700">
+                📜 Riwayat Order
+                    </a>
+                </nav>
 
-            @endif
+        </aside>
+    </aside>
+
+    {{-- Content --}}
+    <main class="flex-1 overflow-y-auto bg-[#0b0b1f] p-8">
+        @yield('content')
+    </main>
 
 </div>
-        @endauth
 
-    </div>
-
-    <nav class="space-y-3">
-
-        <a href="{{ route('user.dashboard') }}"
-           class="block p-3 rounded-lg hover:bg-indigo-700">
-            🏠 Dashboard
-        </a>
-
-        <a href="{{ route('user.order') }}"
-           class="block p-3 rounded-lg hover:bg-indigo-700">
-            🎮 Buat Order
-        </a>
-
-        <a href="{{ route('user.status-order') }}"
-           class="block p-3 rounded-lg hover:bg-indigo-700">
-            📦 Status Order
-        </a>
-        <a href="{{ route('user.riwayat') }}"
-            class="block p-3 rounded-lg hover:bg-indigo-700">
-    📜 Riwayat Order
-        </a>
-    </nav>
-
-</aside>
-
-        <!-- CONTENT -->
-
-        <main class="flex-1 p-8 bg-[#0b0b1f] min-h-screen">
-
-
-            @yield('content')
-
-        </main>
-
-    </div>
 
 </body>
 </html>

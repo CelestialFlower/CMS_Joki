@@ -41,9 +41,9 @@
 
                    <img src="https://i.pinimg.com/736x/06/fa/90/06fa907ff45ab825d353056ce6b7e95b.jpg" class="w-12 h-12 rounded-full">
 
-                    <h1 class="font-bold text-xl">
-                        JOKI CSstore
-                    </h1>
+                    <img src="{{ asset('image/text.gif') }}"
+                            alt="CSstore"
+                            class="h-10 w-auto">
 
                 </div>
 

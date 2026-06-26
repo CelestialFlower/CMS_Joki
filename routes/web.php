@@ -99,6 +99,10 @@ Route::middleware('auth')->group(function () {
 | Admin
 |--------------------------------------------------------------------------
 */
+Route::get('/admin/game/tambah', [GameController::class, 'create'])
+    ->name('admin.game.create');
+Route::get('/admin/artikel/tambah', [ArtikelController::class, 'create'])
+    ->name('admin.artikel.create');
 
 Route::middleware('auth')->group(function () {
 

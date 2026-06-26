@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Artikel;
 use App\Models\Game;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class ArtikelController extends Controller
@@ -46,7 +47,7 @@ class ArtikelController extends Controller
 
     Artikel::create([
         'game_id' => $request->game_id,
-        'judul' => $request->judul,
+        'judul' => Str::title($request->judul),
         'isi' => $request->isi,
         'status' => $request->status,
         'thumbnail' => $thumbnailPath,
@@ -101,5 +102,11 @@ class ArtikelController extends Controller
         'success',
         'Artikel berhasil dihapus'
     );
+}
+public function create()
+{
+    $games = Game::all();
+
+    return view('admin.editArtikel.editArtikel', compact('games'));
 }
 }
