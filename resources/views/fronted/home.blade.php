@@ -122,14 +122,18 @@
                 </p>
 
             </div>
-
+          
+           @auth
             <a href="{{ route('user.order', ['game_id' => $game->id]) }}"
                class="block mt-5 bg-purple-600 hover:bg-purple-700 text-center text-white py-2.5 rounded-xl font-semibold transition">
                 Pesan Joki
             </a>
-
-
-
+            @else
+            <a type="button" onclick="openLoginPopup()" class="block mt-5 bg-purple-600 hover:bg-purple-700 text-center text-white py-2.5 rounded-xl font-semibold transition">
+                Pesan Joki
+            </a>
+            @endauth
+            
         </div>
 
     @empty
